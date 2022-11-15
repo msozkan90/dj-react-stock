@@ -1,0 +1,35 @@
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == "warning" %} 
+<script>
+    iziToast.{{ "error" }}({message:"{{message}}", position: "topRight",
+    messageColor: 'black',
+    messageSize: '16',
+    title: 'Başarısız',
+    titleColor: 'black',
+    titleSize: '16',
+    maxWidth: '600',
+    backgroundColor: '#f34444',
+    iconColor: '#fff',
+    progressBarColor: 'black',});
+</script> 
+{% else %}
+<script>
+    iziToast.{{ "success" }}({message:"{{message}}", position: "topRight",        
+    messageColor: 'black',
+    messageSize: '16',
+    title: 'Başarılı',
+    titleColor: 'black',
+    titleSize: '16',
+    maxWidth: '600',
+    backgroundColor: '#89D99D',
+    iconColor: '#fff',
+    progressBarColor: 'black',
+    resetOnHover: true,
+    transitionIn: 'flipInX',
+    transitionOut: 'flipOutX',});
+
+</script> 
+{% endif %}
+{% endfor %}
+{% endif %}

@@ -1,15 +1,37 @@
 from django.shortcuts import render,redirect
-from .forms import CreateUserForm   
+from .forms import CreateUserForm,LoginUserForm 
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required(login_url = "accounts:signin")
 def index(request):
     return render(request,"index.html")
 
 
 def signin(request):
+    form=LoginUserForm()
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password =request.POST.get('password')
 
-    return render(request,"signin.html")
+        user = authenticate(request, username=username, password=password)
+        username_check=User.objects.filter(username=username)
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'You logged in successfully')
+            return redirect('accounts:index')
+        elif(not username_check):
+            messages.warning(request, 'Username incorrect ')
+            return redirect('accounts:signin')
+        else:
+            messages.warning(request, 'Password incorrect ')
+            context = {"form":form}
+            return redirect('accounts:signin')
+    context = {"form":form}
+    return render(request,"signin.html",context)
 
 
 
@@ -40,3 +62,11 @@ def register(request):
                     messages.warning(request,"This email is already taken")
                     return redirect("user:register")
     return render(request,"register.html",{"form":form})
+
+
+
+
+def log_out(request):
+	logout(request)
+	messages.success(request, "Oturumu başarılı bir şekilde sonlandırdınız.")
+	return redirect("../signin")

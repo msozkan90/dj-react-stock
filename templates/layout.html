@@ -20,6 +20,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
     {% block css %}
     {% endblock  %}
 </head>
@@ -72,7 +73,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="#">Logout</a>
+                        <a class="btn btn-primary" href="{% url 'accounts:logout' %}">Logout</a>
                     </div>
                 </div>
             </div>
@@ -98,9 +99,30 @@
     <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
     <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script>
+        jQuery(function($){
+          $(document).ajaxSend(function (){
+            $("#bg-spinner").fadeIn(500);
+          });
+          $('.btn-send').click(function(){
+            $.ajax({
+              type:'GET',
+              success: function(data){
+                var d = $.parseJSON(data);
+                alert(d.Test);
+              }
+              }).done(function(){
+                setTimeout(function(){
+                  $("#bg-spinner").fadeOut(500);
+                },200);
+            });
+          });
+        });
+      </script>
     {% block js %}
     {% endblock  %}
+    {% include "includes/messages.html" %}
 </body>
 
 </html>

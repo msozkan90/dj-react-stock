@@ -5,6 +5,7 @@ from accounts.models import  UserProfile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import AuthenticationForm
 class SetPasswordForm(forms.Form):
     new_password1 = forms.CharField(
         label=_("New password"),
@@ -43,6 +44,35 @@ class CreateUserForm(UserCreationForm):
             'password1': _('Password'),
             'password2': _('Password Confirmation'),
         }  
+
+
+
+
+
+class LoginUserForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': "form-control form-control-user", 'placeholder':'Username',"type":"text", }),label=  _('Username'))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': "form-control form-control-user", 'placeholder':'Password',"type":"password", }),label=  _('Password'))
+
+    class Meta:
+        model = User
+        
+        fields = ['username', 'password']
+        widgets = {
+
+
+        }       
+        labels = {       
+            'username': _('Username'),
+            'password': _('Password'),
+   
+        }  
+
+
+
+
+
+
+
 
 class UserProfileForm(forms.ModelForm):
     class Meta:

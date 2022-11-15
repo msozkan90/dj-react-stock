@@ -19,7 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
 </head>
 
 <body class="bg-gradient-primary">
@@ -131,7 +131,30 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script>
+        jQuery(function($){
+          $(document).ajaxSend(function (){
+            $("#bg-spinner").fadeIn(500);
+          });
+          $('.btn-send').click(function(){
+            $.ajax({
+              type:'GET',
+              success: function(data){
+                var d = $.parseJSON(data);
+                alert(d.Test);
+              }
+              }).done(function(){
+                setTimeout(function(){
+                  $("#bg-spinner").fadeOut(500);
+                },200);
+            });
+          });
+        });
+      </script>
+    {% block js %}
+    {% endblock  %}
+    {% include "includes/messages.html" %}
 </body>
 
 </html>
