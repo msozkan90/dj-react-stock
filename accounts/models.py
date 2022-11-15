@@ -5,7 +5,9 @@ from django.utils.translation import gettext_lazy as _
 import os
 from django.db import connection
 from django.utils.crypto import get_random_string
-
+from django.dispatch import receiver
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 # Create your models here.
 User._meta.get_field('email').blank = False
 User._meta.get_field('email')._unique = True
@@ -40,29 +42,30 @@ GENDER = (
 
 class Company(models.Model):
     company = models.CharField(max_length=100)
-    status = models.PositiveSmallIntegerField(
-        choices=STATUS,
-        default=1,  
-    )
+    status=models.BooleanField(default=True)
+
     def __str__(self):
         return self.company
  
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    company_name = models.ForeignKey(Company, on_delete=models.CASCADE)
+    company_name = models.ForeignKey(Company, on_delete=models.CASCADE,null=True, blank=True)
     status = models.PositiveSmallIntegerField(
         choices=STATUS,
         default=1,  
     )
 
-    phone = models.CharField(max_length=11,null=True, blank=True)
-    gender=models.PositiveSmallIntegerField(
-        choices=GENDER,
-        null=True, blank=True
-    )
-    registration_number=models.CharField(max_length=15,null=True, blank=True)
-    identity_number=models.CharField(max_length=11,null=True, blank=True)
-    birthdate=models.DateField(null=True, blank=True)
-    address = models.CharField(max_length=300,null=True, blank=True)
+
     def __str__(self):
         return self.user.username
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    
+    instance.userprofile.company_name=Company.objects.filter(id=1).first()
+    instance.userprofile.save()
