@@ -9,7 +9,7 @@ class ItemForm(forms.ModelForm):
         widgets = {
 
             'item_name': forms.TextInput(attrs={'class': "form-control form-control-user ",'placeholder':'Malzeme Adı',"type":"text",}),
-            'quantity': forms.TextInput(attrs={'class': "form-control form-control-user ", 'placeholder':'Adet',"type":"text" }),
+            'quantity': forms.TextInput(attrs={'class': "form-control form-control-user ", 'placeholder':'Adet',"type":"number" }),
             'status': forms.CheckboxInput(attrs={'class': "form-control-user mt-3", 'placeholder':'Durum', }),
         }
 
@@ -47,7 +47,7 @@ class ItemDistributionForm(forms.ModelForm):
 
             'user': forms.Select(attrs={'class': "form-control form-control-user ",'placeholder':'Eczane',"type":"text",}),
             'item_name': forms.Select(attrs={'class': "form-control form-control-user ",'placeholder':'Malzeme',"type":"text",}),
-            'quantity': forms.TextInput(attrs={'class': "form-control form-control-user ", 'placeholder':'Adet',"type":"text" }),
+            'quantity': forms.TextInput(attrs={'class': "form-control form-control-user ", 'placeholder':'Adet',"type":"number" }),
   
         }
 
