@@ -4,3 +4,5 @@ from django.db import models
 class Items(models.Model):
     item_name=models.CharField(max_length=60)
     quantity=models.CharField(max_length=60)
+    def __str__(self):
+        return self.item_name
