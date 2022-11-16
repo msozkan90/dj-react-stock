@@ -40,21 +40,17 @@ GENDER = (
 
     )
 
-class Company(models.Model):
-    company = models.CharField(max_length=100)
-    status=models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.company
  
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    company_name = models.ForeignKey(Company, on_delete=models.CASCADE,null=True, blank=True)
+    pharmacy_name = models.CharField(max_length=100)
+    address = models.CharField(max_length=300,blank=True,null=True)
     status = models.PositiveSmallIntegerField(
         choices=STATUS,
-        default=1,  
+        default=2,  
     )
-
+    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    updated_at = models.DateTimeField(auto_now=True,null=True,blank=True)
 
     def __str__(self):
         return self.user.username
@@ -66,6 +62,4 @@ def create_user_profile(sender, instance, created, **kwargs):
         UserProfile.objects.create(user=instance)
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    
-    instance.userprofile.company_name=Company.objects.filter(id=1).first()
     instance.userprofile.save()

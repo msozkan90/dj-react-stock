@@ -68,48 +68,39 @@ class LoginUserForm(AuthenticationForm):
         }  
 
 
+class UpdateUserForm(forms.ModelForm):
+    username = forms.CharField(max_length=100,
+                               required=True,
+                               widget=forms.TextInput(attrs={'class': 'form-control form-control-user mb-2', 'placeholder':'Username',"type":"text",}))
+    email = forms.EmailField(required=True,
+                             widget=forms.TextInput(attrs={'class': 'form-control form-control-user mb-2', 'placeholder':'Email',"type":"email",}))
 
-
-
-
-
+    class Meta:
+        model = User
+        fields = ['username', 'email']
 
 class UserProfileForm(forms.ModelForm):
+    pharmacy_name=forms.CharField(required=True,widget=forms.TextInput(attrs={'class': "form-control form-control-user mb-2  ",'placeholder':'Eczane Adı','type':"text"}),label=  _('Eczane Adı') )
+
     class Meta:
         model = UserProfile        
         fields = '__all__'
         exclude = ['user','status']
         widgets = {
 
-            'phone': forms.TextInput(attrs={'class': "form-control  mb-2 ",'placeholder':'Telefon No',"type":"number",}),
-            'gender': forms.Select(attrs={'class': "form-control mb-2 ", 'placeholder':'gender' }),
-            'birthdate': forms.DateInput(attrs={'class': "form-control mb-2",'placeholder':'Doğum Tarihi',"type":"date"}),
-            'address': forms.Textarea(attrs={'class': "form-control mb-2 ", 'placeholder':'Adres',"cols":"10","rows":"7" }),
+            'address': forms.Textarea(attrs={'class': "form-control form-control-user mb-2 ", 'placeholder':'Adres',"cols":"10","rows":"7" }),
         }       
         labels = {       
-            'phone': _('Telefon No'),
-            'gender': _('Cinsiyet'),
-            'birthdate': _('Doğum Tarihi'),
+            'pharmacy_name': _('Eczane Adı'),
             'address': _('Adres'),
         }       
         error_messages = {
-            'phone': {
+            'pharmacy_name': {
                 'max_length': _("This phone is too long."),
                 'unique': _("This phone is already taken."),
                 'required':"Please Enter your phone"
             },
-            'gender': {
-                'max_length': _("This gender is too long."),
-                'unique': _("This gender is already taken."),
-                'required':"Please Enter your gender"
-            },
 
-    
-            'birthdate': {
-                'max_length': _("This birthdate name is too long."),
-                'required':"Please Enter your birthdate"
-
-            },
             'address': {
                 'max_length': _("This address is too long."),
                 'unique': _("This address is already taken."),

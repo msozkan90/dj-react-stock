@@ -29,9 +29,9 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">  <a class="btn btn-primary" href="{% url 'items:add_item'%}">
+                            <h6 class="m-0 font-weight-bold text-primary">  <a class="btn btn-primary" href="{% url 'accounts:add_pharmacy'%}">
                                 <i class="fa fa-plus"></i>
-                                Malzeme Ekle</a>
+                                Eczane Ekle</a>
                              </h6>
                         </div>
                         <div class="card-body">
@@ -44,48 +44,56 @@
                                     <tr>
                                       <th data-priority="0" class="d-none">Id</th>
                                       <th data-priority="1">Düzenle</th>
-                                      <th data-priority="2">Malzeme Adı</th>
-                                      <th data-priority="3">Adet</th>                    
-                                      <th data-priority="4">Durum</th>                    
+                                      <th data-priority="2">Kullanıcı Adı</th>
+                                      <th data-priority="3">Eczane Adı</th>                     
+                                      <th data-priority="4">Adres</th>                     
+                                                 
                                     </tr>               
                                   </thead>
                                   <tbody>
-                                    {% for item in items %}
+                                    {% for pharmacy in pharmacys %}
+                                    {% if pharmacy.userprofile.status == 1 %}
+                                    {% else %}
+                                    
                                     <tr>
-                                      <td class="d-none">{{item.id}}</td>
+                                      <td class="d-none">{{pharmacy.id}}</td>
                                       <td>
-                                        <a href="{% url 'items:edit_item' item.id %}">
+                                        <a href="{% url 'accounts:edit_pharmacy' pharmacy.id %}">
                                           <i
                                             class="fa fa-pen-to-square fa-1x text-primary text-btn-size"
                                           ></i>
                                         </a>
                                       </td>
-                                      <td>{{item.item_name}}</td>
+                                      <td>{{pharmacy.username}}</td>
                                       <td>
-                                        {{item.quantity}}                  
+                                        {{pharmacy.userprofile.pharmacy_name}}                  
                                       </td>
                                       <td>
-                                        {% if item.status %}
-                                        <i class="fa fa-check bg-success text-white p-1"></i>
-                                        {% else %}
-                                        <i class="fa fa-xmark bg-danger text-white p-1 px-2"></i>
+                                        {% if pharmacy.userprofile.address == none %}
+                                          -
+                                        {% else %}  
+                                        {{pharmacy.userprofile.address}}                
                                         {% endif %}
-                                                     
                                       </td>
+            
                                                    
                                     </tr>
+                                    {% endif %}
                                     {% endfor %}
+                                  
                                   </tbody>
                                   <tfoot>
                                     <tr >
                                       <th class="d-none">Id</th>
                                       <th ></th>
-                                      <th>Malzeme Adı</th>
-                                      <th>Adet</th>   
-                                      <th>Durum</th>               
+                                      <th>Kullanıcı Adı</th>                                
+                                      <th>Eczane Adı</th>               
+                                      <th>Adres</th>               
+                                                 
                     
                                     </tr>
                                   </tfoot>
+                                 
                                 </table>
                             </div>
                         </div>
