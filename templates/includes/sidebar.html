@@ -14,11 +14,17 @@
     
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">
+                    <a class="nav-link" href="{% url 'pharmacy:dashboard' %}">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
-    
+        
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'pharmacy:purchase_history' %}">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Satınalma Geçmişi</span></a>
+                </li>
                 <!-- Divider -->
                 <hr class="sidebar-divider">
     
@@ -40,7 +46,8 @@
                             <a class="collapse-item" href="{% url 'items:item_list' %}">Malzemeler</a>
                             <a class="collapse-item" href="{% url 'items:item_charts' %}">Malzeme Grafikleri</a>
                             <a class="collapse-item" href="{% url 'items:add_item' %}">Malzeme Ekle</a>
-                            <a class="collapse-item" href="{% url 'items:add_item' %}">Malzeme Ver</a>
+                            <a class="collapse-item" href="{% url 'items:item_distribution' %}">Malzeme Dağıtım</a>
+                            <a class="collapse-item" href="{% url 'items:item_distribution_list' %}">Malzeme Dağıtım Listesi</a>
                         </div>
                     </div>
                 </li>
