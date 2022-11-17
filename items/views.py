@@ -7,10 +7,11 @@ from django.contrib.auth.decorators import login_required
 from .models import ItemDistribution, Items,PharmacyStorage
 from .forms import ItemForm,ItemDistributionForm
 from django.http import HttpResponseRedirect
+from pharmacy.utils import admin_login_required
 # Create your views here.
 
 
-@login_required(login_url = "accounts:signin")
+@admin_login_required(login_url = "accounts:index")
 def add_item(request):
     form=ItemForm(request.POST or None )
     if request.method == 'POST':
@@ -22,18 +23,18 @@ def add_item(request):
 
 
 
-@login_required(login_url = "accounts:signin")
+@admin_login_required(login_url = "accounts:index")
 def item_list(request):
     items=Items.objects.all()
     return render(request,"item_list.html",{"items":items})
 
-@login_required(login_url = "accounts:signin")
+@admin_login_required(login_url = "accounts:index")
 def item_charts(request):
     items=Items.objects.all()
     return render(request,"item_charts.html",{"items":items})
 
 
-@login_required(login_url = "accounts:signin")
+@admin_login_required(login_url = "accounts:index")
 def item_distribution(request):
     form=ItemDistributionForm(request.POST or None )
 
@@ -64,14 +65,14 @@ def item_distribution(request):
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     return render(request,"item_distribution.html",{"form":form})
 
-@login_required(login_url = "accounts:signin")
+@admin_login_required(login_url = "accounts:index")
 def item_distribution_list(request):
     items=ItemDistribution.objects.all()
     return render(request,"item_distribution_list.html",{"items":items})
 
 
 
-@login_required(login_url = "accounts:signin")
+@admin_login_required(login_url = "accounts:index")
 def edit_item(request,pk):
     instance = get_object_or_404(Items,id = pk)
     form=ItemForm(request.POST or None,instance = instance)

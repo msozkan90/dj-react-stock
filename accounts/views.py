@@ -7,8 +7,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
+from pharmacy.utils import admin_login_required
 # Create your views here.
-@login_required(login_url = "accounts:signin")
+
 def index(request):
     return render(request,"index.html")
 
@@ -35,13 +36,13 @@ def signin(request):
     context = {"form":form}
     return render(request,"signin.html",context)
 
-@login_required(login_url = "accounts:signin")
+@admin_login_required(login_url = "accounts:index")
 def pharmacy_list(request):
     pharmacys=User.objects.all()
     return render(request,"pharmacy_list.html",{"pharmacys":pharmacys})
 
 
-
+@admin_login_required(login_url = "accounts:index")
 def add_pharmacy(request):
     form=CreateUserForm()
     form_profile=UserProfileForm()
@@ -79,7 +80,7 @@ def add_pharmacy(request):
 
 
 
-@login_required(login_url = "accounts:signin")
+@admin_login_required(login_url = "accounts:index")
 def edit_pharmacy(request,pk):
     instance = get_object_or_404(User,id = pk)
     instance_profile = get_object_or_404(UserProfile,user = instance)

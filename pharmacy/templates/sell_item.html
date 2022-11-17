@@ -18,20 +18,20 @@
         {% csrf_token %}
 
         <div class="row ">
-            <div class="col-md-12">
+            <div class="col-md-12 mt-2">
                 <label for="id_item_name" class= "text-md">
                 {{form.user.label}}
                 </label>               
-                {% if form.user.errors %} 
-                {{form.user}}                  
-                <div class="text-danger text-sm validation_label">
-                {{ form.user.errors }}
-                </div>   
-                {% else %}
-                {{form.user}}  
-                {% endif %}
+                <select name="user" class="form-control form-control-user " placeholder="User" type="text" required="" id="id_user" >                  
+                    <option value="{{request.user.id}} " select>{{request.user}} </option>
+
+                  
+                  </select>
+                     
+           
+           
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 mt-2">
                 <label for="id_item_name" class= "text-md">
                 {{form.item_name.label}}
                 </label>               
@@ -57,19 +57,7 @@
             {{form.quantity}}    
             {% endif %}
             </div>
-            <div class="col-md-12">
-                <label for="id_status" class= "text-md">
-                    {{form.status.label}}
-                </label>
-                {% if form.status.errors %}                       
-                {{form.status}}
-                <div class="text-danger text-sm validation_label">
-                {{ form.status.errors }}
-                </div>
-                {% else %}
-                {{form.status}}    
-                {% endif %}
-                </div>
+
         </div>
 
         <button
