@@ -7,13 +7,13 @@
 
 {% block body %}
 
-<div class="card w-50 mx-auto p-4">
+ {% comment %} <div class="card w-50 mx-auto p-4">
     <div class="card-header py-3 mb-3">
-        <h6 class="m-0 font-weight-bold text-primary">  
+        <h6 class="m-0 font-weight-bold text-primary">
         <i class="fa fa-plus">  </i>    Malzeme Ekle
          </h6>
     </div>
-   
+
     <form method="post" action="">
         {% csrf_token %}
 
@@ -21,40 +21,40 @@
             <div class="col-md-12 mt-2">
                 <label for="id_item_name" class= "text-md">
                 {{form.user.label}}
-                </label>               
-                <select name="user" class="form-control form-control-user " placeholder="User" type="text" required="" id="id_user" >                  
+                </label>
+                <select name="user" class="form-control form-control-user " placeholder="User" type="text" required="" id="id_user" >
                     <option value="{{request.user.id}} " select>{{request.user}} </option>
 
-                  
+
                   </select>
-                     
-           
-           
+
+
+
             </div>
             <div class="col-md-12 mt-2">
                 <label for="id_item_name" class= "text-md">
                 {{form.item_name.label}}
-                </label>               
-                {% if form.item_name.errors %} 
-                {{form.item_name}}                  
+                </label>
+                {% if form.item_name.errors %}
+                {{form.item_name}}
                 <div class="text-danger text-sm validation_label">
                 {{ form.item_name.errors }}
-                </div>   
+                </div>
                 {% else %}
-                {{form.item_name}}  
+                {{form.item_name}}
                 {% endif %}
             </div>
             <div class="col-md-12 mt-2">
             <label for="id_quantity" class= "text-md">
                 {{form.quantity.label}}
             </label>
-            {% if form.quantity.errors %}                       
+            {% if form.quantity.errors %}
             {{form.quantity}}
             <div class="text-danger text-sm validation_label">
             {{ form.quantity.errors }}
             </div>
             {% else %}
-            {{form.quantity}}    
+            {{form.quantity}}
             {% endif %}
             </div>
 
@@ -64,15 +64,30 @@
         type="submit"
         class="px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase btn bg-gradient-primary"
         id="submit_button"
-   
+
         >
         <i class="fa fa-plus">  </i> Ekle
         </button>
     </form>
-</div>
+</div>  {% endcomment %}
 
+<div id="sell_item_container"></div>
 {% endblock  %}
 
 
 {% block js %}
+{% endblock  %}
+{% block extra_js %}
+<script>
+    window.user = {
+        user:"{{ request.user }}",
+        name: "{{ request.user.username }}",
+        id: "{{ request.user.id }}",
+    }
+
+
+
+</script>
+
+<script src="{% static 'react/sell_item.js' %}" type="text/babel"></script> 
 {% endblock  %}

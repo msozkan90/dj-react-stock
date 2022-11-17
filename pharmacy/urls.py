@@ -3,10 +3,12 @@ from django.urls import path
 from . import views
 app_name="pharmacy"
 urlpatterns = [
-
+    path("getItemList",views.getItemList,name="getItemList"),
     path("dashboard",views.dashboard,name="dashboard"),
     path("purchase/history",views.purchase_history,name="purchase_history"),
     path("sell/history",views.sell_history,name="sell_history"),
     path("sell/item",views.sell_item,name="sell_item"),
+    path("sell/item/react",views.sell_item_react,name="sell_item_react"),
+
 
 ]

@@ -9,7 +9,8 @@ from django.http import HttpResponseRedirect
 from pharmacy.forms import PharmacySellForm
 from .utils import admin_login_required
 from pharmacy.models import PharmacySell
-# Create your views here.
+import json
+from django.http import JsonResponse
 @login_required(login_url = "accounts:signin")
 def dashboard(request):
     items=PharmacyStorage.objects.filter(user=request.user)
@@ -28,10 +29,18 @@ def sell_history(request):
     items=PharmacySell.objects.filter(user=request.user)
     return render(request,"sell_history.html",{"items":items})
 
+
+def getItemList(request):
+    items=list(Items.objects.values())
+    return JsonResponse( items, safe=False)
+
+
+
 @login_required(login_url = "accounts:signin")
 def sell_item(request):
     form=PharmacySellForm(request.POST or None )
     form.user=request.user
+
     if request.method == 'POST':
         print(form.errors)
         if form.is_valid():
@@ -56,3 +65,25 @@ def sell_item(request):
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     return render(request,"sell_item.html",{"form":form})
+
+def sell_item_react(request):
+    file_array = json.loads(request.body)
+    print(file_array)
+    item_instance=Items.objects.filter(id=file_array["item_name"]).first()
+    print(file_array["user"]["id"])
+    user_instance=User.objects.filter(id=file_array["user"]["id"]).first()
+    print(item_instance)
+    pharmacy_storage=PharmacyStorage.objects.filter(user=user_instance,item_name=item_instance).first()    
+    try:
+        if int(pharmacy_storage.quantity) < int(file_array["quantity"]):
+            return JsonResponse({"message":"Stok yeterli değildir.","color":"#f34444","type":"Başarısız"}, safe=False)
+        else:
+            document= PharmacySell.objects.create(user=user_instance,item_name=item_instance,quantity=file_array["quantity"])        
+            pharmacy_storage.quantity = int(pharmacy_storage.quantity) - int(file_array["quantity"])
+            pharmacy_storage.save()
+            # messages.success(request,"Satış başarılı bir şekilde oluşturuldu.")
+            return JsonResponse({"message":"Satış başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
+    except:
+        return JsonResponse({"message":"Stokta bu ürün yok.","color":"#f34444","type":"Başarısız"}, safe=False)
+
+    

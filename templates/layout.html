@@ -100,27 +100,18 @@
     <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script> {% endcomment %}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
-    <script>
-        jQuery(function($){
-          $(document).ajaxSend(function (){
-            $("#bg-spinner").fadeIn(500);
-          });
-          $('.btn-send').click(function(){
-            $.ajax({
-              type:'GET',
-              success: function(data){
-                var d = $.parseJSON(data);
-                alert(d.Test);
-              }
-              }).done(function(){
-                setTimeout(function(){
-                  $("#bg-spinner").fadeOut(500);
-                },200);
-            });
-          });
-        });
-      </script>
+  
+    
+
+      <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+      <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+      <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    
     {% block js %}
+    {% endblock  %}
+
+    {% block extra_js %}
     {% endblock  %}
     {% include "includes/messages.html" %}
 </body>

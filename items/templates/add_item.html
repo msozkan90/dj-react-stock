@@ -7,11 +7,11 @@
 
 {% block body %}
 
-<div class="card w-50 mx-auto p-4">
+{% comment %} <div class="card w-50 mx-auto p-4">
     <div class="card-header py-3 mb-3">
         <h6 class="m-0 font-weight-bold text-primary">  
         <i class="fa fa-plus">  </i>    Malzeme Ekle
-         </h6>
+         </h6>  
     </div>
     <form method="post" action="">
         {% csrf_token %}
@@ -58,8 +58,8 @@
                 {% endif %}
                 </div>
         </div>
-
-        <button
+        <div id="like_button_container"></div>
+        {% comment %} <button
         type="submit"
         class="px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase btn bg-gradient-primary"
         id="submit_button"
@@ -68,10 +68,13 @@
         <i class="fa fa-plus">  </i> Ekle
         </button>
     </form>
-</div>
-
+</div> {% endcomment %}
+<div id="add_item_container"></div>
 {% endblock  %}
 
 
 {% block js %}
+{% endblock  %}
+{% block extra_js %}
+<script src="{% static 'react/add_item.js' %}" type="text/babel"></script>
 {% endblock  %}
