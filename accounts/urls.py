@@ -9,6 +9,7 @@ urlpatterns = [
     path("signin/",views.signin,name="signin"),
     path("logout/",views.log_out,name="logout"),
     path("add/pharmacy",views.add_pharmacy,name="add_pharmacy"),
+    path("add/pharmacy/react",views.add_pharmacy_react,name="add_pharmacy_react"),
     path("pharmacy/list",views.pharmacy_list,name="pharmacy_list"),
     path("edit/pharmacy/<int:pk>/",views.edit_pharmacy,name="edit_pharmacy"),
 

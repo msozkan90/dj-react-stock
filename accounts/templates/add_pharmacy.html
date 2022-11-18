@@ -7,7 +7,7 @@
 
 {% block body %}
 
-<div class="card w-50 mx-auto p-4">
+{% comment %} <div class="card w-50 mx-auto p-4">
     <div class="card-header py-3 mb-3">
         <h6 class="m-0 font-weight-bold text-primary">  
         <i class="fa fa-plus">  </i>    Eczane Ekle
@@ -113,10 +113,21 @@
         <i class="fa fa-plus">  </i> Ekle
         </button>
     </form>
-</div>
+</div> {% endcomment %}
 
+
+
+<div id="add_pharmacy_container"></div>
 {% endblock  %}
 
 
 {% block js %}
+{% endblock  %}
+{% block extra_js %}
+<script>
+
+</script>
+
+<script src="{% static 'react/add_pharmacy.js' %}" type="text/babel"></script> 
+
 {% endblock  %}

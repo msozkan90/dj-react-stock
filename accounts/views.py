@@ -8,7 +8,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from pharmacy.utils import admin_login_required
-# Create your views here.
+import json
+from django.http import JsonResponse
 
 def index(request):
     return render(request,"index.html")
@@ -78,6 +79,45 @@ def add_pharmacy(request):
                     return redirect("accounts:add_pharmacy")
     return render(request,"add_pharmacy.html",{"form":form,"form_profile":form_profile})
 
+def add_pharmacy_react(request):
+ 
+    file_array = json.loads(request.body)
+    password1= file_array['password1']
+    password2= file_array['password2']
+    username= file_array['username']
+    email = file_array['email']
+    pharmacy_name = file_array['pharmacy_name']
+    address = file_array['address']
+    email_check=User.objects.filter(email=email)
+    users=User.objects.filter(username=username)
+    try:
+        if(password1 != password2):
+             
+                return JsonResponse({"message":"Passwords did not match.","color":"#f34444","type":"Başarısız"}, safe=False)
+        if(users):
+        
+            return JsonResponse({"message":"This user name is already taken.","color":"#f34444","type":"Başarısız"}, safe=False)
+        if(email_check):
+           
+                return JsonResponse({"message":"This email is already taken.","color":"#f34444","type":"Başarısız"}, safe=False)
+        user=User.objects.create(username=username,password=password1,email=email)
+        user.save()
+        user.userprofile.pharmacy_name=pharmacy_name
+        user.userprofile.address=address
+        user.save()
+        user.userprofile.save()
+        return JsonResponse({"message":"Dağıtım başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
+
+    except(ValueError):
+        if(password1 != password2):
+             
+                return JsonResponse({"message":"Passwords did not match.","color":"#f34444","type":"Başarısız"}, safe=False)
+        if(users):
+        
+            return JsonResponse({"message":"This user name is already taken.","color":"#f34444","type":"Başarısız"}, safe=False)
+        if(email_check):
+           
+                return JsonResponse({"message":"This email is already taken.","color":"#f34444","type":"Başarısız"}, safe=False)
 
 
 @admin_login_required(login_url = "accounts:index")
