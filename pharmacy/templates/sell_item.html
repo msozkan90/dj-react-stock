@@ -72,6 +72,7 @@
 </div>  {% endcomment %}
 
 <div id="sell_item_container"></div>
+{% csrf_token %}
 {% endblock  %}
 
 
@@ -79,11 +80,17 @@
 {% endblock  %}
 {% block extra_js %}
 <script>
+    //let token = "{% csrf_token %}"
     window.user = {
         user:"{{ request.user }}",
         name: "{{ request.user.username }}",
         id: "{{ request.user.id }}",
     }
+
+   // window.token = {
+    //    csrf_token: token
+        
+    //}
 
 
 

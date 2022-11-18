@@ -1,11 +1,14 @@
 'use strict';
 
 const e = React.createElement;
+
+
+
+
 // import React, {useState, useEffect} from 'react'
 const SellItemButton=()=> {
 
   const [screenStates, setScreenStates] = React.useState({
-    csrftoken:"l9FDjZA5JB9DqJdP5KyU5YjH7JZzLKWffOxlWZfm8IPejcThoF18YfBqeS3fpqLf",
     item_name: "",
     quantity: 0,
     user:window.user,
@@ -16,7 +19,7 @@ const SellItemButton=()=> {
   React.useEffect(() => {
   
     getItemList();
- 
+    getToken();
 },[])
 
 
@@ -26,11 +29,38 @@ const SellItemButton=()=> {
 
   }
 
+  const getToken = ()  => {
+    var csrftoken = getCookie('csrftoken')
+    let input_token=document.getElementsByName("csrfmiddlewaretoken")[0]
+    // console.log(input_token)
+    // console.log(csrftoken)
 
-  console.log("states:",screenStates)
-  console.log("dsada:",window.user)
+    // input_token.innerHTML = csrftoken
+    // input_token.value = csrftoken
+    // console.log(input_token)
+}
+
+
+
+const getCookie = (name)  => {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+
 
   const SellItem =() =>{
+      var csrftoken = getCookie('csrftoken')
       if (screenStates.item_name == '' || screenStates.quantity == ''   ) {
         iziToast.show({message:"Lütfen bilgileri doğru giriniz", position: "topRight",
         messageColor: 'black',
@@ -48,7 +78,7 @@ const SellItemButton=()=> {
           'method':'POST',
           headers: {
               'Content-Type':'application/json',
-              'X-CSRFToken':screenStates.csrftoken,  
+              'X-CSRFToken':csrftoken,  
             }, 
             body:JSON.stringify({"item_name":screenStates.item_name,"quantity":screenStates.quantity,"user":screenStates.user})
     
@@ -125,7 +155,7 @@ const SellItemButton=()=> {
   
     
 
-}
+  }
 
     return (
       <div>
@@ -138,10 +168,10 @@ const SellItemButton=()=> {
               </div>
               <form method="post" action="" onSubmit={(e)=>{
                 e.preventDefault()
+                
                 SellItem()
               }}>
-                  <input type="hidden" name="csrfmiddlewaretoken" value="l9FDjZA5JB9DqJdP5KyU5YjH7JZzLKWffOxlWZfm8IPejcThoF18YfBqeS3fpqLf"/>
-
+                
                   <div className="row ">
                       
 
@@ -153,7 +183,7 @@ const SellItemButton=()=> {
                             <select onChange={handleInputs} name="item_name" className="form-control form-control-user " placeholder="Malzeme" type="text" required="" id="id_item_name">
 
                               <option value="" >---------</option>
-                              {console.log(screenStates.item_list,'DENEMEMEMEME')}
+                           
                               {screenStates.item_list.map((item,key)=>{
                               return(
                                 <option value={item.id} > {item.item_name} </option>

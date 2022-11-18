@@ -31,6 +31,42 @@ def add_item_react(request):
     return JsonResponse('Documents added..', safe=False)
 
 
+def getUserList(request):
+    users=list(User.objects.values())
+    return JsonResponse( users, safe=False)
+
+
+
+
+def item_distribution_react(request):
+    file_array = json.loads(request.body)
+    print(file_array)
+    user= file_array["user"]
+    quantity= file_array["quantity"]
+    item_name= file_array["item_name"]
+    user_instance=User.objects.filter(id=user).first()
+    item_instance=Items.objects.filter(id=item_name).first()
+    if int(item_instance.quantity) < int(quantity):
+
+        return JsonResponse({"message":"Stok yeterli değildir.","color":"#f34444","type":"Başarısız"}, safe=False)
+    else:
+        storage_check=PharmacyStorage.objects.filter(user=user_instance,item_name=item_instance).count()  
+        if storage_check == 0:
+            PharmacyStorage.objects.create(user=user_instance,quantity=quantity,item_name=item_instance)
+            item_instance.quantity = int(item_instance.quantity) - int(quantity)
+            item_instance.save()
+            return JsonResponse({"message":"Dağıtım başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
+        else:
+            storage_update=PharmacyStorage.objects.filter(user=user,item_name=item_instance).first()
+            item_instance.quantity = int(item_instance.quantity) - int(quantity)
+            storage_update.quantity += int(quantity)
+            storage_update.save()
+            item_instance.save()
+        return JsonResponse({"message":"Dağıtım başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
+
+
+
+
 @admin_login_required(login_url = "accounts:index")
 def item_list(request):
     items=Items.objects.all()

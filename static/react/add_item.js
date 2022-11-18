@@ -3,11 +3,7 @@
 const e = React.createElement;
 
 const AddItemButton=()=> {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { liked: false };
-  //   this.state = { csrftoken:"cJHjBH29m3A80IbGOQVyjobx9J5UB3BDGVyZ7j4cPDTz9M4IuWb1RJcelLuztzVp"}
-  // }
+
   const [screenStates, setScreenStates] = React.useState({
     csrftoken:"cJHjBH29m3A80IbGOQVyjobx9J5UB3BDGVyZ7j4cPDTz9M4IuWb1RJcelLuztzVp",
     item_name: "",
@@ -23,8 +19,24 @@ const AddItemButton=()=> {
     setScreenStates({...screenStates,[e.target.name]:e.target.checked})
 
   }
-  console.log("states:",screenStates)
+
+  const getCookie = (name)  => {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
   const AddItem =() =>{
+    var csrftoken = getCookie('csrftoken')
       if (screenStates.item_name == '' || screenStates.quantity == ''   ) {
         iziToast.show({message:"Lütfen bilgileri doğru giriniz", position: "topRight",
         messageColor: 'black',
@@ -42,7 +54,7 @@ const AddItemButton=()=> {
           'method':'POST',
           headers: {
               'Content-Type':'application/json',
-              'X-CSRFToken':screenStates.csrftoken,  
+              'X-CSRFToken':csrftoken,  
             }, 
             body:JSON.stringify({"item_name":screenStates.item_name,"quantity":screenStates.quantity,"status":screenStates.status})
     

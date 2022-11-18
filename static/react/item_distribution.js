@@ -1,31 +1,37 @@
 'use strict';
 
 const e = React.createElement;
+const ItemDistributionButton=()=> {
 
-const AddItemDistributionButton=()=> {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { liked: false };
-  //   this.state = { csrftoken:"cJHjBH29m3A80IbGOQVyjobx9J5UB3BDGVyZ7j4cPDTz9M4IuWb1RJcelLuztzVp"}
-  // }
   const [screenStates, setScreenStates] = React.useState({
-    csrftoken:"cJHjBH29m3A80IbGOQVyjobx9J5UB3BDGVyZ7j4cPDTz9M4IuWb1RJcelLuztzVp",
+  
     item_name: "",
     quantity: 0,
-    status:false
+    user:window.user,
+    item_list:[],
+   // user_list:[],
+    
   })
+  const [user_list, setUserList] =  React.useState([])
+  React.useEffect(() => {
+    getUserList();
+    getItemList();
+   
+ 
+},[])
+
+
   const handleInputs = (e) =>{
     setScreenStates({...screenStates,[e.target.name]:e.target.value})
 
   }
 
-  const handleCheckbox = (e) =>{
-    setScreenStates({...screenStates,[e.target.name]:e.target.checked})
 
-  }
-  console.log("states:",screenStates)
-  const AddItemDistribution =() =>{
-      if (screenStates.item_name == '' || screenStates.quantity == ''   ) {
+  
+
+  const ItemDistribution =() =>{
+    var csrftoken = getCookie('csrftoken')
+      if (screenStates.item_name == '' || screenStates.quantity == ''  ||  user_list == []) {
         iziToast.show({message:"Lütfen bilgileri doğru giriniz", position: "topRight",
         messageColor: 'black',
         messageSize: '16',
@@ -38,24 +44,27 @@ const AddItemDistributionButton=()=> {
         progressBarColor: 'black',});
       }
       else{
-        fetch('http://localhost:8000/add/item/test', {
+        fetch('http://localhost:8000/item/distribution/react', {
           'method':'POST',
           headers: {
               'Content-Type':'application/json',
-              'X-CSRFToken':screenStates.csrftoken,  
+              'X-CSRFToken': csrftoken,  
             }, 
-            body:JSON.stringify({"item_name":screenStates.item_name,"quantity":screenStates.quantity,"status":screenStates.status})
+            body:JSON.stringify({"item_name":screenStates.item_name,"quantity":screenStates.quantity,"user":screenStates.user})
     
         }).then(resp => resp.json())
+        
         .then(resp =>             
-          (iziToast.show({message:"Malzeme başarılı bir şekilde eklendi", position: "topRight",
+          (iziToast.show({
+          message: resp["message"], 
+          position: "topRight",
           messageColor: 'black',
           messageSize: '16',
-          title: 'Başarılı',
+          title: resp["type"],
           titleColor: 'black',
           titleSize: '16',
           maxWidth: '600',
-          backgroundColor: '#89D99D',
+          backgroundColor: resp["color"],
           iconColor: '#fff',
           progressBarColor: 'black',
           resetOnHover: true,
@@ -81,34 +90,155 @@ const AddItemDistributionButton=()=> {
       }
 
   }
+  const getCookie = (name)  => {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+  
+  const getUserList =() =>{
+    var csrftoken = getCookie('csrftoken')
+    fetch('http://localhost:8000/getUserList', {
+      'method':'GET',
+      headers: {
+          'Content-Type':'application/json',
+          'X-CSRFToken':csrftoken,  
+        }, 
+       
+  
+    }).then(resp => resp.json())
+     // .then(response => setScreenStates({...screenStates,user_list:response} ))
+     .then(response => setUserList(response))
+      
+     
+     .catch(function(error){
+        iziToast.show({message:"Lütfen formu doğru bir şekilde doldurun", position: "topRight",
+        messageColor: 'black',
+        messageSize: '16',
+        title: 'Başarısız',
+        titleColor: 'black',
+        titleSize: '16',
+        maxWidth: '600',
+        backgroundColor: '#f34444',
+        iconColor: '#fff',
+        progressBarColor: 'black',
+        resetOnHover: true,
+        transitionIn: 'flipInX',
+        transitionOut: 'flipOutX',});
+      console.log('ERROR:', error)
+    })
+  
+  
+  
+  }
+  const getItemList =() =>{
+    var csrftoken = getCookie('csrftoken')
+      fetch('http://localhost:8000/getItemList', {
+        'method':'GET',
+        headers: {
+            'Content-Type':'application/json',
+            'X-CSRFToken':csrftoken,  
+          }, 
+         
+
+      }).then(resp => resp.json())
+        .then(response => setScreenStates({item_list:response} ))
+        
+
+       .catch(function(error){
+          iziToast.show({message:"Lütfen formu doğru bir şekilde doldurun", position: "topRight",
+          messageColor: 'black',
+          messageSize: '16',
+          title: 'Başarısız',
+          titleColor: 'black',
+          titleSize: '16',
+          maxWidth: '600',
+          backgroundColor: '#f34444',
+          iconColor: '#fff',
+          progressBarColor: 'black',
+          resetOnHover: true,
+          transitionIn: 'flipInX',
+          transitionOut: 'flipOutX',});
+        console.log('ERROR:', error)
+      })
+  
+    
+
+}
 
 
- 
     return (
       <div>
 
         <div className="card w-50 mx-auto p-4">
               <div className="card-header py-3 mb-3">
                   <h6 className="m-0 font-weight-bold text-primary">  
-                  <i className="fa fa-plus">  </i>    Malzeme Ekle
+                  <i className="fa fa-plus">  </i>    Malzeme Dağıt
                   </h6>  
               </div>
               <form method="post" action="" onSubmit={(e)=>{
                 e.preventDefault()
-                AddItemDistribution()
+                ItemDistribution()
               }}>
-                  <input type="hidden" name="csrfmiddlewaretoken" value="Skp7lm9HhnLMOJos2eXpgOXiT8BhhApnmwgNRYbKKX4dXNhuIkdSO9YZ5a0W96J9"/>
+                  <input type="hidden" name="csrfmiddlewaretoken" value="l9FDjZA5JB9DqJdP5KyU5YjH7JZzLKWffOxlWZfm8IPejcThoF18YfBqeS3fpqLf"/>
 
                   <div className="row ">
-                      
+                  <div className="col-md-12">
+                          <label htmlFor="id_item_name" className="text-md">
+                              Eczane Adı
+                              </label>              
+                    
+                            <select onChange={handleInputs} name="user" className="form-control form-control-user " placeholder="Eczane" type="text" required="" id="id_user">
+
+                              <option value="" >---------</option>
+                           
+                              {user_list.map((user,key)=>{
+                              return(
+                                <option value={user.id} > {user.username} </option>
+                              
+
+                                );
+
+                            })}
+
+                              
+                            </select>  
+                    
+                        </div>
+
                       <div className="col-md-12">
                           <label htmlFor="id_item_name" className="text-md">
-                          Malzeme Adı
-                          </label>               
-                          
-                      <input type="text" name="item_name" onChange={handleInputs} className="form-control form-control-user " placeholder="Malzeme Adı" maxLength="60" required="" id="id_item_name" />  
+                              Malzeme Adı
+                              </label>              
+                    
+                            <select onChange={handleInputs} name="item_name" className="form-control form-control-user " placeholder="Malzeme" type="text" required="" id="id_item_name">
+
+                              <option value="" >---------</option>
+                           
+                              {screenStates.item_list.map((item,key)=>{
+                              return(
+                                <option value={item.id} > {item.item_name} </option>
                               
-                      </div>
+
+                                );
+
+                            })}
+
+                              
+                            </select>  
+                    
+                        </div>
+
                       <div className="col-md-12 mt-2">
                       <label htmlFor="id_quantity" className="text-md">
                           Adet
@@ -117,14 +247,10 @@ const AddItemDistributionButton=()=> {
                       <input type="number"  name="quantity" onChange={handleInputs} className="form-control form-control-user " placeholder="Adet" required="" id="id_quantity"/>   
                       
                       </div>
-                      <div className="col-md-12 mt-2">
-                          <label htmlFor="id_status" className="text-md">
-                              Durum
-                          </label>
-                       
-                          <input onChange={handleCheckbox} type="checkbox" name="status" className="form-control-user mt-3" placeholder="Durum" id="id_status" checked={screenStates.status}/>   
-                          
-                          </div>
+
+  
+
+
                   </div>
                       <button 
                     type="submit"
@@ -136,11 +262,19 @@ const AddItemDistributionButton=()=> {
                   
               </form>
         </div>
+
+
+
+
+        
+
+        
       </div>
+
 
     );
  
 }
 
-const domContainer = document.querySelector('#add_item_container');
-ReactDOM.render(<AddItemDistributionButton />, domContainer);
+const domContainer = document.querySelector('#item_distribution_container');
+ReactDOM.render(<ItemDistributionButton />, domContainer);
