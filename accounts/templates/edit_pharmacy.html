@@ -7,7 +7,7 @@
 
 {% block body %}
 
-<div class="card w-50 mx-auto p-4">
+{% comment %} <div class="card w-50 mx-auto p-4">
     <div class="card-header py-3 mb-3">
         <h6 class="m-0 font-weight-bold text-primary">  
         <i class="fa fa-plus">  </i>    Eczane Düzenle
@@ -88,10 +88,41 @@
         <i class="fa fa-plus">  </i> Düzenle
         </button>
     </form>
-</div>
+</div> {% endcomment %}
+
+
+
+
+<div id="edit_pharmacy_container"></div>
+
+
+
 
 {% endblock  %}
 
 
 {% block js %}
+{% endblock  %}
+{% block extra_js %}
+<script>
+    
+
+    window.pharmacy = {
+        username:"{{ instance.username }}",
+        email:"{{ instance.email }}",
+        pharmacy_id: "{{ instance.id }}",
+    
+
+    }
+
+    window.pharmacy_profile = {
+        pharmacy_name: "{{ instance_profile.pharmacy_name }}",
+        pharmacy_profile_id: "{{ instance_profile.id }}",
+        address: "{{ instance_profile.address }}",
+    }
+
+</script>
+
+
+<script src="{% static 'react/edit_pharmacy.js' %}" type="text/babel"></script>
 {% endblock  %}

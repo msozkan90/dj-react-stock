@@ -135,13 +135,32 @@ def edit_pharmacy(request,pk):
             form_profile.save()
             messages.success(request,"Eczane başarılı bir şekilde güncellendi.")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-    return render(request,"edit_pharmacy.html",{"form":form,"form_profile":form_profile})
+    return render(request,"edit_pharmacy.html",{"form":form,"form_profile":form_profile,"instance":instance,"instance_profile":instance_profile})
 
 
 
 
 
 
+
+def edit_pharmacy_react(request,pk):
+    file_array = json.loads(request.body)
+
+    pharmacy_profile_id= file_array['pharmacy_profile_id']
+    pharmacy_id= file_array['pharmacy_id']
+    username= file_array['username']
+    email = file_array['email']
+    pharmacy_name = file_array['pharmacy_name']
+    address = file_array['address']
+    pharmacy_profile=UserProfile.objects.filter(id=pharmacy_profile_id).first()
+    pharmacy=User.objects.filter(id=pk).first()
+    pharmacy_profile.address=address
+    pharmacy_profile.pharmacy_name=pharmacy_name
+    pharmacy.username=username
+    pharmacy.email=email
+    pharmacy.save()
+    pharmacy_profile.save()
+    return JsonResponse({"message":"Eczane başarılı bir şekilde güncellendi.","color":"#89D99D","type":"Başarılı"}, safe=False)
 
 
 

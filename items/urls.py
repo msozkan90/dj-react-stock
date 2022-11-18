@@ -9,6 +9,7 @@ urlpatterns = [
 
     path("add/item/react",views.add_item_react,name="add_item_react"),
     path("item/distribution/react",views.item_distribution_react,name="item_distribution_react"),
+    path("edit/item/<int:pk>/react",views.edit_item_react,name="edit_item_react"),
 
 
     path("item/charts",views.item_charts,name="item_charts"),
@@ -16,5 +17,6 @@ urlpatterns = [
     path("item/distribution/list",views.item_distribution_list,name="item_distribution_list"),
     path("edit/item/<int:pk>/",views.edit_item,name="edit_item"),
     path("getUserList",views.getUserList,name="getUserList"),
+    path("getItem",views.getItem,name="getItem"),
 
 ]

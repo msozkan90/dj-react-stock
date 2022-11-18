@@ -13,8 +13,13 @@ import json
 from django.http import JsonResponse
 @login_required(login_url = "accounts:signin")
 def dashboard(request):
-    items=PharmacyStorage.objects.filter(user=request.user)
-    return render(request,"dashboard.html",{"items":items})
+    if request.user.userprofile == 1:
+        items=Items.objects.all()
+        return render(request,"dashboard.html",{"items":items})
+    else:
+        items=PharmacyStorage.objects.filter(user=request.user)
+        return render(request,"dashboard.html",{"items":items})
+
 
 
 
@@ -68,11 +73,11 @@ def sell_item(request):
 
 def sell_item_react(request):
     file_array = json.loads(request.body)
-    print(file_array)
+
     item_instance=Items.objects.filter(id=file_array["item_name"]).first()
-    print(file_array["user"]["id"])
+
     user_instance=User.objects.filter(id=file_array["user"]["id"]).first()
-    print(item_instance)
+
     pharmacy_storage=PharmacyStorage.objects.filter(user=user_instance,item_name=item_instance).first()    
     try:
         if int(pharmacy_storage.quantity) < int(file_array["quantity"]):

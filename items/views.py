@@ -28,7 +28,7 @@ def add_item_react(request):
     #for i in file_array["file_array"]:
     document= Items.objects.create(item_name=file_array["item_name"],status=file_array["status"],quantity=file_array["quantity"])
     print(document)
-    return JsonResponse('Documents added..', safe=False)
+    return JsonResponse({"message":"Malzeme başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
 
 
 def getUserList(request):
@@ -124,6 +124,30 @@ def edit_item(request,pk):
         print(form.errors)
         if form.is_valid():
                 form.save()
-                messages.success(request,"Dosya başarılı bir şekilde oluşturuldu.")
+                messages.success(request,"Malzeme başarılı bir şekilde düzenlendi.")
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-    return render(request,"edit_item.html",{"form":form})
+    return render(request,"edit_item.html",{"form":form,"instance":instance})
+
+
+
+
+def edit_item_react(request,pk):
+    file_array = json.loads(request.body)
+    item=Items.objects.filter(id=pk).first()
+    item_name= file_array['item_name']
+    quantity= file_array['quantity']
+    status= file_array['status']
+    item.item_name=item_name
+    item.quantity=quantity
+    item.status=status
+    item.save()
+    return JsonResponse({"message":"Malzeme başarılı bir şekilde düzenlendi.","color":"#89D99D","type":"Başarılı"}, safe=False)
+
+
+
+
+def getItem(request,id):
+    users=list(User.objects.values())
+    return JsonResponse( users, safe=False)
+
+

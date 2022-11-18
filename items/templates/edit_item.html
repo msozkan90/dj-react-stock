@@ -7,7 +7,7 @@
 
 {% block body %}
 
-<div class="card w-50 mx-auto p-4">
+{% comment %} <div class="card w-50 mx-auto p-4">
     <div class="card-header py-3 mb-3">
         <h6 class="m-0 font-weight-bold text-primary">  
         <i class="fa fa-edit">  </i>    Malzeme Düzenle
@@ -67,10 +67,29 @@
         <i class="fa fa-edit">  </i> Düzenle
         </button>
     </form>
-</div>
+</div> {% endcomment %}
 
+<div id="edit_item_container"></div>
 {% endblock  %}
 
 
 {% block js %}
+{% endblock  %}
+{% block extra_js %}
+<script>
+    
+
+    window.item = {
+        quantity:"{{ instance.quantity }}",
+        status:"{{ instance.status }}",
+        item_name: "{{ instance.item_name }}",
+        id: "{{ instance.id }}",
+    }
+
+
+
+</script>
+
+
+<script src="{% static 'react/edit_item.js' %}" type="text/babel"></script>
 {% endblock  %}
