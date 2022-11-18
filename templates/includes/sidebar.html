@@ -68,6 +68,8 @@
                 {% else %}
                 
                 {% endif %}
+
+                {% if request.user.userprofile.status != 1 %}
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'pharmacy:sell_item' %}">
                         <i class="fa fa-money-bill"></i>
@@ -85,6 +87,8 @@
                             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
                             <span>Satınalma Geçmişi</span></a>
                     </li>
+                {% else %}
+                {% endif %}
                 {% comment %} <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"

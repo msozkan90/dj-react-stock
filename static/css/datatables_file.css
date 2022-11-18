@@ -1,0 +1,129 @@
+
+
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: white !important;
+  background-color: white !important;
+  background: white !important ;
+}
+
+
+[class~="dt-button"] {
+  --bs-btn-padding-x: 0.8rem !important;
+  --bs-btn-padding-y: 0.45rem !important;
+  --bs-btn-font-family: !important;
+  --bs-btn-font-size: 0.55rem !important;
+  --bs-btn-font-weight: 600 !important;
+  --bs-btn-line-height: 0.9 !important;
+  --bs-btn-color: #67748e !important;
+  --bs-btn-bg: transparent !important;
+  --bs-btn-border-width: 1px !important;
+  --bs-btn-border-color: transparent !important;
+  --bs-btn-border-radius: 0.7rem !important;
+  --bs-btn-box-shadow: 0 4px 7px -1px rgba(0, 0, 0, 0.11),
+    0 2px 4px -1px rgba(0, 0, 0, 0.07) !important;
+  --bs-btn-disabled-opacity: 0.65 !important;
+  --bs-btn-focus-box-shadow: 0 0 0 0.2rem
+    rgba(var(--bs-btn-focus-shadow-rgb), 0.5) !important;
+  display: inline-block !important;
+  padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x) !important;
+  font-family: var(--bs-btn-font-family) !important;
+  font-size: 14px !important;
+  font-weight: var(--bs-btn-font-weight) !important;
+  line-height: var(--bs-btn-line-height) !important;
+  color: rgb(34, 34, 34) !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  border: var(--bs-btn-border-width) solid var(--bs-btn-border-color) !important;
+  border-radius: 5px !important;
+  background-color: gainsboro !important;
+  transition: all 0.15s ease-in !important;
+  margin-top:5px;
+}
+[class~="dt-button"]:hover {
+  background-color:rgb(248, 248, 248)!important;
+}
+[name~="example_length"] {
+  margin-top:5px;
+  background-color: gainsboro !important;
+  padding: 3.5px 20px 3.5px 20px;
+  margin-left: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align:left!important;
+  --bs-btn-padding-x: 0.8rem !important;
+  --bs-btn-padding-y: 0.45rem !important;
+  --bs-btn-font-family: !important;
+  --bs-btn-font-size: 0.55rem !important;
+  --bs-btn-font-weight: 600 !important;
+  --bs-btn-line-height: 0.9 !important;
+  --bs-btn-color: #67748e !important;
+  --bs-btn-bg: transparent !important;
+  --bs-btn-border-width: 1px !important;
+  --bs-btn-border-color: transparent !important;
+  --bs-btn-border-radius: 0.7rem !important;
+  --bs-btn-box-shadow: 0 4px 7px -1px rgba(0, 0, 0, 0.11),
+    0 2px 4px -1px rgba(0, 0, 0, 0.07) !important;
+  --bs-btn-disabled-opacity: 0.65 !important;
+  --bs-btn-focus-box-shadow: 0 0 0 0.2rem
+    rgba(var(--bs-btn-focus-shadow-rgb), 0.5) !important;
+
+  font-family: var(--bs-btn-font-family) !important;
+  font-size: 14px !important;
+  font-weight: var(--bs-btn-font-weight) !important;
+  line-height: var(--bs-btn-line-height) !important;
+  color: rgb(34, 34, 34) !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  border: var(--bs-btn-border-width) solid var(--bs-btn-border-color) !important;
+  border-radius: 5px !important;
+  background-color: gainsboro !important;
+  transition: all 0.15s ease-in !important;
+
+}
+
+[type~="search"] {
+  padding: 8px 20px 8px 20px;
+  margin-top:0px;
+  margin-right: 10px!important;
+  font-size:16px;
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+  font-weight:600;
+  font-size:16px;
+}
+#example_filter{
+  margin-top: 0px!important;
+}
+#example_length{
+  margin-bottom: 0px!important;
+}
+
+
+tr {
+  height: 2.2rem!important;
+  font-weight: 600;
+  color: rgb(49, 48, 48);
+}
+
+
+
+
+ table#example th , table#example tr ,  table#example td  , table#example thead  {
+
+  text-align:center!important;
+}
+
+.modal-dialog{
+  display: flex;
+  height: 90%;
+  justify-content: center;
+  align-items: center;
+}
+
+div.modal-header > button.btn-close{
+  background-color: rgb(223, 0, 0);
+}

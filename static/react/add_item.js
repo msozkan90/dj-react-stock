@@ -4,8 +4,7 @@ const e = React.createElement;
 
 const AddItemButton=()=> {
 
-  const [screenStates, setScreenStates] = React.useState({
-    csrftoken:"cJHjBH29m3A80IbGOQVyjobx9J5UB3BDGVyZ7j4cPDTz9M4IuWb1RJcelLuztzVp",
+  const [screenStates, setScreenStates ] = React.useState({
     item_name: "",
     quantity: 0,
     status:false
@@ -17,7 +16,7 @@ const AddItemButton=()=> {
 
   const handleCheckbox = (e) =>{
     setScreenStates({...screenStates,[e.target.name]:e.target.checked})
-
+    
   }
 
   const getCookie = (name)  => {
@@ -35,6 +34,13 @@ const AddItemButton=()=> {
     }
     return cookieValue;
   }
+  const clearState = () => {
+    console.log(screenStates.item_name)
+    screenStates.item_name=""
+    setScreenStates({ ...screenStates });
+    setScreenStates({...screenStates,["item_name"]:""})
+    console.log(screenStates.item_name)
+  };
   const AddItem =() =>{
     var csrftoken = getCookie('csrftoken')
       if (screenStates.item_name == '' || screenStates.quantity == ''   ) {
@@ -72,7 +78,11 @@ const AddItemButton=()=> {
           progressBarColor: 'black',
           resetOnHover: true,
           transitionIn: 'flipInX',
-          transitionOut: 'flipOutX',})))
+          transitionOut: 'flipOutX',})
+          ))
+          .then(clearState)
+      
+          
          .catch(function(error){
             iziToast.show({message:"Lütfen formu doğru bir şekilde doldurun", position: "topRight",
             messageColor: 'black',

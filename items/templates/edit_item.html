@@ -7,67 +7,7 @@
 
 {% block body %}
 
-{% comment %} <div class="card w-50 mx-auto p-4">
-    <div class="card-header py-3 mb-3">
-        <h6 class="m-0 font-weight-bold text-primary">  
-        <i class="fa fa-edit">  </i>    Malzeme Düzenle
-         </h6>
-    </div>
-    <form method="post" action="">
-        {% csrf_token %}
 
-        <div class="row ">
-            <div class="col-md-12">
-                <label for="id_item_name" class= "text-md">
-                {{form.item_name.label}}
-                </label>               
-                {% if form.item_name.errors %} 
-                {{form.item_name}}                  
-                <div class="text-danger text-sm validation_label">
-                {{ form.item_name.errors }}
-                </div>   
-                {% else %}
-                {{form.item_name}}  
-                {% endif %}
-            </div>
-            <div class="col-md-12 mt-2">
-            <label for="id_quantity" class= "text-md">
-                {{form.quantity.label}}
-            </label>
-            {% if form.quantity.errors %}                       
-            {{form.quantity}}
-            <div class="text-danger text-sm validation_label">
-            {{ form.quantity.errors }}
-            </div>
-            {% else %}
-            {{form.quantity}}    
-            {% endif %}
-            </div>
-            <div class="col-md-12">
-                <label for="id_status" class= "text-md">
-                    {{form.status.label}}
-                </label>
-                {% if form.status.errors %}                       
-                {{form.status}}
-                <div class="text-danger text-sm validation_label">
-                {{ form.status.errors }}
-                </div>
-                {% else %}
-                {{form.status}}    
-                {% endif %}
-                </div>
-        </div>
-
-        <button
-        type="submit"
-        class="px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase btn bg-gradient-primary"
-        id="submit_button"
-   
-        >
-        <i class="fa fa-edit">  </i> Düzenle
-        </button>
-    </form>
-</div> {% endcomment %}
 
 <div id="edit_item_container"></div>
 {% endblock  %}

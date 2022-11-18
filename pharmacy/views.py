@@ -13,7 +13,7 @@ import json
 from django.http import JsonResponse
 @login_required(login_url = "accounts:signin")
 def dashboard(request):
-    if request.user.userprofile == 1:
+    if request.user.userprofile.status == 1:
         items=Items.objects.all()
         return render(request,"dashboard.html",{"items":items})
     else:
