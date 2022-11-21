@@ -13,7 +13,7 @@
                 <hr class="sidebar-divider my-0">
     
                 <!-- Nav Item - Dashboard -->
-                <li class="nav-item active">
+                <li class="nav-item {% if request.path == '/dashboard' %} active {% endif %}">
                     <a class="nav-link" href="{% url 'pharmacy:dashboard' %}">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Kontrol Paneli</span></a>
@@ -29,14 +29,14 @@
                 </div>
                 {% if request.user.userprofile.status == 1 %}
                                 <!-- Nav Item - Pages Collapse Menu -->
-                                <li class="nav-item ">                      
-                                        <a class="nav-link" href="{% url 'items:add_item' %}">
+                                <li class="nav-item {% if request.path == '/add/item' %} active {% endif %}">                      
+                                        <a class="nav-link " href="{% url 'items:add_item' %}">
                                             <i class="fa fa-plus"></i>
                                             <span>Malzeme Ekle</span>
                                         </a>
                                 </li>
 
-                                <li class="nav-item ">                      
+                                <li class="nav-item {% if request.path == '/add/pharmacy' %} active {% endif %}">                      
                                     <a class="nav-link"  href="{% url 'accounts:add_pharmacy' %}">
                                         <i class="fa fa-plus"></i>
                                         <span>Eczane Ekle</span>
@@ -45,22 +45,22 @@
 
 
 
-                                <li class="nav-item ">                      
-                                    <a class="nav-link" href="{% url 'items:item_list' %}}">
+                                <li class="nav-item {% if request.path == '/items' %} active {% endif %}">                      
+                                    <a class="nav-link" href="/items">
                                         <i class="fa fa-box-open"></i>
                                         <span>Malzemeler</span>
                                     </a>
                                 </li>
                                 
-                                <li class="nav-item ">                      
-                                    <a class="nav-link" href="{% url 'items:item_distribution' %}}">
+                                <li class="nav-item {% if request.path == '/item/distribution' %} active {% endif %}">                      
+                                    <a class="nav-link" href="/item/distribution">
                                         <i class="fa fa-truck"></i>
                                         <span>Malzeme Dağıtım</span>
                                     </a>
                                 </li>
                                 
-                                <li class="nav-item ">                      
-                                    <a class="nav-link" href="{% url 'items:item_distribution_list' %}}">
+                                <li class="nav-item {% if request.path == '/item/distribution/list' %} active {% endif %}">                      
+                                    <a class="nav-link" href="/item/distribution/list">
                                         <i class="fa fa-list-ul"></i>
                                         <span>Malzeme Dağıtım Listesi</span>
                                     </a>
@@ -87,7 +87,7 @@
 
 
                    
-                                <li class="nav-item ">  
+                                <li class="nav-item {% if request.path == '/pharmacy/list' %} active {% endif %}">  
                                         <a class="nav-link"  href="{% url 'accounts:pharmacy_list' %}">
                                             <i class="fa fa-briefcase-medical"></i>
                                             <span>Ezcaneler</span>
@@ -100,19 +100,19 @@
                 {% endif %}
 
                 {% if request.user.userprofile.status != 1 %}
-                <li class="nav-item active">
+                <li class="nav-item {% if request.path == '/sell/item' %} active {% endif %}">
                     <a class="nav-link" href="{% url 'pharmacy:sell_item' %}">
                         <i class="fa fa-money-bill"></i>
                         <span>Satış Yap</span></a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item {% if request.path == '/sell/history' %} active {% endif %}">
                     <a class="nav-link" href="{% url 'pharmacy:sell_history' %}">
                         <i class="fas fa-wallet"></i>
                         <span>Satış Geçmişi</span></a>
                 </li>
 
                     <!-- Nav Item - Dashboard -->
-                    <li class="nav-item active">
+                    <li class="nav-item {% if request.path == '/purchase/history' %} active {% endif %}">
                         <a class="nav-link" href="{% url 'pharmacy:purchase_history' %}">
                             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
                             <span>Satınalma Geçmişi</span></a>
