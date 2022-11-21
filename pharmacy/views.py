@@ -136,18 +136,14 @@ def getItemname(request,id):
 
 def confirm_order_react(request,id):
     file_array = json.loads(request.body)
-    print(file_array["id"])
     order=Order.objects.filter(id=file_array["id"]).first()
     item=Items.objects.filter(item_name=order.item_name).first()
     user_instance=order.user
-    print(order.user)
-    print(order.user.id)
-    print(order.item_name)
     print(order.quantity)
     print(item.quantity)
-    print(item)
-    if int(item.quantity) < int(order.quantity):
 
+    if int(item.quantity) < int(order.quantity):
+        print("burda")
         return JsonResponse({"message":"Stok yeterli değildir.","color":"#f34444","type":"Başarısız"}, safe=False)
     else:
         storage_check=PharmacyStorage.objects.filter(user=user_instance,item_name=item).count()  
@@ -155,6 +151,8 @@ def confirm_order_react(request,id):
             PharmacyStorage.objects.create(user=user_instance,quantity=order.quantity,item_name=item)
             item.quantity = int(item.quantity) - int(order.quantity)
             item.save()
+            order.status=True
+            order.save()
             ItemDistribution.objects.create(user=user_instance,item_name=item,quantity=order.quantity)
             return JsonResponse({"message":"Dağıtım başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
         else:
@@ -163,9 +161,8 @@ def confirm_order_react(request,id):
             storage_update.quantity += int(order.quantity)
             storage_update.save()
             item.save()
+            order.status=True
+            order.save()
             ItemDistribution.objects.create(user=user_instance,item_name=item,quantity=order.quantity)
-        return JsonResponse({"message":"Dağıtım başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
-    # user_instance=User.objects.filter(id=file_array["user"]["id"]).first()
-    # item_instance=Items.objects.filter(id=file_array["item_name"]).first()
-    # document= Order.objects.create(item_name=item_instance,user=user_instance,quantity=file_array["quantity"])
-    return JsonResponse({"message":"Sipariş başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
+            return JsonResponse({"message":"Dağıtım başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
+
