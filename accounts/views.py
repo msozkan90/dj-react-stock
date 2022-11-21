@@ -25,25 +25,25 @@ def signin(request):
         username_check=User.objects.filter(username=username)
         if user is not None:
             login(request, user)
-            messages.success(request, 'You logged in successfully')
-            return redirect('accounts:index')
+            messages.success(request, 'Başarılı bir şekilde giriş yaptınız')
+            return redirect('pharmacy:dashboard')
         elif(not username_check):
-            messages.warning(request, 'Username incorrect ')
+            messages.warning(request, 'Kullanıcıadı yanlış')
             return redirect('accounts:signin')
         else:
-            messages.warning(request, 'Password incorrect ')
+            messages.warning(request, 'Şifre yanlış')
             context = {"form":form}
             return redirect('accounts:signin')
     context = {"form":form}
     return render(request,"signin.html",context)
 
-@admin_login_required(login_url = "accounts:index")
+@admin_login_required(login_url = "pharmacy:dashboard")
 def pharmacy_list(request):
     pharmacys=User.objects.all()
     return render(request,"pharmacy_list.html",{"pharmacys":pharmacys})
 
 
-@admin_login_required(login_url = "accounts:index")
+@admin_login_required(login_url = "pharmacy:dashboard")
 def add_pharmacy(request):
     form=CreateUserForm()
     form_profile=UserProfileForm()
@@ -69,13 +69,13 @@ def add_pharmacy(request):
                     return redirect("accounts:pharmacy_list")
         except(ValueError):
             if(password1 != password2):
-                    messages.warning(request,"Passwords did not match")
+                    messages.warning(request,"Şifreler eşleşmedi")
                     return redirect("accounts:add_pharmacy")
             if(users):
-                messages.warning(request,"This user name is already taken")
+                messages.warning(request,"Bu kullanıcıadı alınmış")
                 return redirect("accounts:add_pharmacy")
             if(email_check):
-                    messages.warning(request,"This email is already taken")
+                    messages.warning(request,"Bu email adresi kullanılmış")
                     return redirect("accounts:add_pharmacy")
     return render(request,"add_pharmacy.html",{"form":form,"form_profile":form_profile})
 
@@ -93,34 +93,34 @@ def add_pharmacy_react(request):
     try:
         if(password1 != password2):
              
-                return JsonResponse({"message":"Passwords did not match.","color":"#f34444","type":"Başarısız"}, safe=False)
+                return JsonResponse({"message":"Şifreler eşleşmedi.","color":"#f34444","type":"Başarısız"}, safe=False)
         if(users):
         
-            return JsonResponse({"message":"This user name is already taken.","color":"#f34444","type":"Başarısız"}, safe=False)
+            return JsonResponse({"message":"Bu kullanıcıadı alınmış.","color":"#f34444","type":"Başarısız"}, safe=False)
         if(email_check):
            
-                return JsonResponse({"message":"This email is already taken.","color":"#f34444","type":"Başarısız"}, safe=False)
+                return JsonResponse({"message":"Bu email adresi kullanılmış.","color":"#f34444","type":"Başarısız"}, safe=False)
         user=User.objects.create(username=username,password=password1,email=email)
         user.save()
         user.userprofile.pharmacy_name=pharmacy_name
         user.userprofile.address=address
         user.save()
         user.userprofile.save()
-        return JsonResponse({"message":"Dağıtım başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
+        return JsonResponse({"message":"Eczane başarılı bir şekilde eklendi.","color":"#89D99D","type":"Başarılı"}, safe=False)
 
     except(ValueError):
         if(password1 != password2):
              
-                return JsonResponse({"message":"Passwords did not match.","color":"#f34444","type":"Başarısız"}, safe=False)
+                return JsonResponse({"message":"Şifreler eşleşmedi.","color":"#f34444","type":"Başarısız"}, safe=False)
         if(users):
         
-            return JsonResponse({"message":"This user name is already taken.","color":"#f34444","type":"Başarısız"}, safe=False)
+            return JsonResponse({"message":"Bu kullanıcıadı alınmış.","color":"#f34444","type":"Başarısız"}, safe=False)
         if(email_check):
            
-                return JsonResponse({"message":"This email is already taken.","color":"#f34444","type":"Başarısız"}, safe=False)
+                return JsonResponse({"message":"Bu email adresi kullanılmış.","color":"#f34444","type":"Başarısız"}, safe=False)
 
 
-@admin_login_required(login_url = "accounts:index")
+@admin_login_required(login_url = "pharmacy:dashboard")
 def edit_pharmacy(request,pk):
     instance = get_object_or_404(User,id = pk)
     instance_profile = get_object_or_404(UserProfile,user = instance)
@@ -183,17 +183,17 @@ def register(request):
             if form.is_valid:
                     user = form.save(commit=False)
                     user.save()
-                    messages.success(request,"You registered successfully. Please log in.")
+                    messages.success(request,"Başarılı bir şekilde kayıt oldunuz. Lütfen giriş yapınız.")
                     return redirect("accounts:signin")
         except(ValueError):
             if(password1 != password2):
-                    messages.warning(request,"Passwords did not match")
+                    messages.warning(request,"Şifreler eşleşmedi")
                     return redirect("accounts:register")
             if(users):
-                messages.warning(request,"This user name is already taken")
+                messages.warning(request,"Bu kullanıcıadı alınmış")
                 return redirect("accounts:register")
             if(email_check):
-                    messages.warning(request,"This email is already taken")
+                    messages.warning(request,"ThBu email aderesi kullanılmış")
                     return redirect("user:register")
     return render(request,"register.html",{"form":form})
 

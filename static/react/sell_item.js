@@ -163,7 +163,7 @@ const getCookie = (name)  => {
         <div className="card w-50 mx-auto p-4">
               <div className="card-header py-3 mb-3">
                   <h6 className="m-0 font-weight-bold text-primary">  
-                  <i className="fa fa-plus">  </i>    Malzeme Ekle
+                  <i className="fa fa-plus">  </i>    Satış Yap
                   </h6>  
               </div>
               <form method="post" action="" onSubmit={(e)=>{
@@ -213,7 +213,7 @@ const getCookie = (name)  => {
                   </div>
                       <button 
                     type="submit"
-                    className="px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase btn bg-gradient-primary"
+                    className="px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase btn bg-primary"
                     id="submit_button"
                     >
                     <i className="fa fa-plus">  </i> Ekle

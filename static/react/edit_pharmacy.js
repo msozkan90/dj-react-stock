@@ -79,7 +79,7 @@ const EditPharmacyButton=()=> {
     
         }).then(resp => resp.json())
         .then(resp =>             
-          (iziToast.show({message:"Malzeme başarılı bir şekilde eklendi", position: "topRight",
+          (iziToast.show({message:"Eczane başarılı bir şekilde güncellendi.", position: "topRight",
           messageColor: 'black',
           messageSize: '16',
           title: 'Başarılı',
@@ -176,7 +176,7 @@ const EditPharmacyButton=()=> {
 
                       <button 
                     type="submit"
-                    className="px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase btn bg-gradient-primary"
+                    className="px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase btn bg-primary"
                     id="submit_button"
                     >
                     <i className="fa fa-plus">  </i> Düzenle

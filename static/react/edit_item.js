@@ -146,13 +146,13 @@ const EditItemButton=()=> {
                               Durum
                           </label>
                        
-                          <input onChange={handleCheckbox} type="checkbox" name="status" className="form-control-user mt-3" placeholder="Durum" id="id_status" checked={screenStates.status}/>   
+                          <input onChange={handleCheckbox} type="checkbox" name="status" className="form-control-user mt-3 ml-2" placeholder="Durum" id="id_status" checked={screenStates.status}/>   
                           
                           </div>
                   </div>
                       <button 
                     type="submit"
-                    className="px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase btn bg-gradient-primary"
+                    className="px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase btn bg-primary"
                     id="submit_button"
                     >
                     <i className="fa fa-plus">  </i> Ekle

@@ -18,7 +18,7 @@ def add_item(request):
     if request.method == 'POST':
         if form.is_valid():
                 form.save()
-                messages.success(request,"Dosya başarılı bir şekilde oluşturuldu.")
+                messages.success(request,"Malzeme başarılı bir şekilde oluşturuldu.")
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     return render(request,"add_item.html",{"form":form})
 
@@ -32,7 +32,7 @@ def add_item_react(request):
 
 
 def getUserList(request):
-    users=list(User.objects.values())
+    users=list(User.objects.filter(is_superuser=False).values())
     return JsonResponse( users, safe=False)
 
 
@@ -55,6 +55,7 @@ def item_distribution_react(request):
             PharmacyStorage.objects.create(user=user_instance,quantity=quantity,item_name=item_instance)
             item_instance.quantity = int(item_instance.quantity) - int(quantity)
             item_instance.save()
+            ItemDistribution.objects.create(user=user_instance,item_name=item_instance,quantity=quantity)
             return JsonResponse({"message":"Dağıtım başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
         else:
             storage_update=PharmacyStorage.objects.filter(user=user,item_name=item_instance).first()
@@ -62,23 +63,24 @@ def item_distribution_react(request):
             storage_update.quantity += int(quantity)
             storage_update.save()
             item_instance.save()
+            ItemDistribution.objects.create(user=user_instance,item_name=item_instance,quantity=quantity)
         return JsonResponse({"message":"Dağıtım başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
 
 
 
 
-@admin_login_required(login_url = "accounts:index")
+@admin_login_required(login_url = "pharmacy:dashboard")
 def item_list(request):
     items=Items.objects.all()
     return render(request,"item_list.html",{"items":items})
 
-@admin_login_required(login_url = "accounts:index")
+@admin_login_required(login_url = "pharmacy:dashboard")
 def item_charts(request):
     items=Items.objects.all()
     return render(request,"item_charts.html",{"items":items})
 
 
-@admin_login_required(login_url = "accounts:index")
+@admin_login_required(login_url = "pharmacy:dashboard")
 def item_distribution(request):
     form=ItemDistributionForm(request.POST or None )
 
@@ -99,24 +101,26 @@ def item_distribution(request):
                     PharmacyStorage.objects.create(user=user_instance,quantity=quantity,item_name=item_instance)
                     item_instance.quantity = int(item_instance.quantity) - int(quantity)
                     item_instance.save()
+                    ItemDistribution.objects.create(user=user_instance,item_name=item_instance,quantity=quantity)
                 else:
                     storage_update=PharmacyStorage.objects.filter(user=user,item_name=item_instance).first()
                     item_instance.quantity = int(item_instance.quantity) - int(quantity)
                     storage_update.quantity += int(quantity)
                     storage_update.save()
                     item_instance.save()
-                messages.success(request,"Malezeme dağıtımı başarılı bir şekilde oluşturuldu.")
+                    ItemDistribution.objects.create(user=user_instance,item_name=item_instance,quantity=quantity)
+                messages.success(request,"Malzeme dağıtımı başarılı bir şekilde oluşturuldu.")
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     return render(request,"item_distribution.html",{"form":form})
 
-@admin_login_required(login_url = "accounts:index")
+@admin_login_required(login_url = "pharmacy:dashboard")
 def item_distribution_list(request):
     items=ItemDistribution.objects.all()
     return render(request,"item_distribution_list.html",{"items":items})
 
 
 
-@admin_login_required(login_url = "accounts:index")
+@admin_login_required(login_url = "pharmacy:dashboard")
 def edit_item(request,pk):
     instance = get_object_or_404(Items,id = pk)
     form=ItemForm(request.POST or None,instance = instance)
