@@ -155,7 +155,7 @@ const EditItemButton=()=> {
                     className="px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase btn bg-primary"
                     id="submit_button"
                     >
-                    <i className="fa fa-plus">  </i> Ekle
+                    <i className="fa fa-plus">  </i> Düzenle
                     </button>
                   
               </form>

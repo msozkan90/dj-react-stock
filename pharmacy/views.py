@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
-from items.models import ItemDistribution, Items,PharmacyStorage
+from items.models import ItemDistribution, Items, Order,PharmacyStorage
 from django.http import HttpResponseRedirect
-from pharmacy.forms import PharmacySellForm
+from pharmacy.forms import PharmacySellForm,OrderItemForm
 from .utils import admin_login_required
 from pharmacy.models import PharmacySell
 import json
@@ -92,3 +92,30 @@ def sell_item_react(request):
         return JsonResponse({"message":"Stokta bu ürün yok.","color":"#f34444","type":"Başarısız"}, safe=False)
 
     
+
+@login_required(login_url = "accounts:signin")
+def order_item(request):
+    form=OrderItemForm(request.POST or None )
+    form.user=request.user
+    return render(request,"order_item.html",{"form":form})
+
+
+def order_item_react(request):
+    file_array = json.loads(request.body)
+    user_instance=User.objects.filter(id=file_array["user"]["id"]).first()
+    item_instance=Items.objects.filter(id=file_array["item_name"]).first()
+    document= Order.objects.create(item_name=item_instance,user=user_instance,quantity=file_array["quantity"])
+    return JsonResponse({"message":"Sipariş başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
+
+
+
+@login_required(login_url = "accounts:signin")
+def order_history(request):
+    items=Order.objects.filter(user=request.user)
+    return render(request,"order_history.html",{"items":items})
+
+
+@admin_login_required(login_url = "pharmacy:dashboard")
+def orders(request):
+    items=Order.objects.all()
+    return render(request,"order_history.html",{"items":items})

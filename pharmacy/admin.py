@@ -5,3 +5,6 @@ from .models import PharmacySell
 class PharmacySellAdmin(admin.ModelAdmin):
     list_display = ('item_name', 'quantity','user','created_at')
 admin.site.register(PharmacySell, PharmacySellAdmin)
+
+
+

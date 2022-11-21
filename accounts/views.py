@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponseRedirect
 from accounts.models import UserProfile
+from items.models import PharmacyStorage
 from .forms import CreateUserForm,LoginUserForm, UpdateUserForm,UserProfileForm
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -122,7 +123,9 @@ def add_pharmacy_react(request):
 
 @admin_login_required(login_url = "pharmacy:dashboard")
 def edit_pharmacy(request,pk):
+    
     instance = get_object_or_404(User,id = pk)
+    items=PharmacyStorage.objects.filter(user=instance)
     instance_profile = get_object_or_404(UserProfile,user = instance)
     form=UpdateUserForm(request.POST or None,instance = instance)
     form_profile=UserProfileForm(request.POST or None,instance = instance_profile)
@@ -135,7 +138,7 @@ def edit_pharmacy(request,pk):
             form_profile.save()
             messages.success(request,"Eczane başarılı bir şekilde güncellendi.")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-    return render(request,"edit_pharmacy.html",{"form":form,"form_profile":form_profile,"instance":instance,"instance_profile":instance_profile})
+    return render(request,"edit_pharmacy.html",{"form":form,"form_profile":form_profile,"instance":instance,"instance_profile":instance_profile,"items":items})
 
 
 

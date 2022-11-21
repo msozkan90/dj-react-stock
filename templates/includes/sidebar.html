@@ -65,6 +65,11 @@
                                         <span>Malzeme Dağıtım Listesi</span>
                                     </a>
                                 </li>
+                                <li class="nav-item {% if request.path == '/orders' %} active {% endif %}">
+                                    <a class="nav-link" href="{% url 'pharmacy:orders' %}">
+                                        <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                                        <span>Siparişler</span></a>
+                                </li>
                                 {% comment %} <li class="nav-item">
                                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                                         aria-expanded="true" aria-controls="collapseTwo">
@@ -116,6 +121,18 @@
                         <a class="nav-link" href="{% url 'pharmacy:purchase_history' %}">
                             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
                             <span>Satınalma Geçmişi</span></a>
+                    </li>
+
+
+                    <li class="nav-item {% if request.path == '/order/item' %} active {% endif %}">
+                        <a class="nav-link" href="{% url 'pharmacy:order_item' %}">
+                            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                            <span>Sipariş Oluştur</span></a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/order/history' %} active {% endif %}">
+                        <a class="nav-link" href="{% url 'pharmacy:order_history' %}">
+                            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                            <span>Sipariş Geçmişi</span></a>
                     </li>
                 {% else %}
                 {% endif %}

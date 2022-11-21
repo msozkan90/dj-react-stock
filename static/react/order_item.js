@@ -6,7 +6,7 @@ const e = React.createElement;
 
 
 // import React, {useState, useEffect} from 'react'
-const SellItemButton=()=> {
+const OrderItemButton=()=> {
 
   const [screenStates, setScreenStates] = React.useState({
     item_name: "",
@@ -59,7 +59,7 @@ const getCookie = (name)  => {
 }
 
 
-  const SellItem =() =>{
+  const OrderItem =() =>{
       var csrftoken = getCookie('csrftoken')
       if (screenStates.item_name == '' || screenStates.quantity == ''   ) {
         iziToast.show({message:"Lütfen bilgileri doğru giriniz", position: "topRight",
@@ -74,7 +74,7 @@ const getCookie = (name)  => {
         progressBarColor: 'black',});
       }
       else{
-        fetch('http://localhost:8000/sell/item/react', {
+        fetch('http://localhost:8000/order/item/react', {
           'method':'POST',
           headers: {
               'Content-Type':'application/json',
@@ -163,13 +163,13 @@ const getCookie = (name)  => {
         <div className="card w-50 mx-auto p-4">
               <div className="card-header py-3 mb-3">
                   <h6 className="m-0 font-weight-bold text-primary">  
-                  <i className="fa fa-plus">  </i>    Satış Yap
+                  <i className="fa fa-plus">  </i>    Sipariş Oluştur
                   </h6>  
               </div>
               <form method="post" action="" onSubmit={(e)=>{
                 e.preventDefault()
                 
-                SellItem()
+                OrderItem()
               }}>
                 
                   <div className="row ">
@@ -216,7 +216,7 @@ const getCookie = (name)  => {
                     className="px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase btn bg-primary"
                     id="submit_button"
                     >
-                    <i className="fa fa-plus">  </i> Sat
+                    <i className="fa fa-plus">  </i> Siperiş Ver
                     </button>
                   
               </form>
@@ -235,5 +235,5 @@ const getCookie = (name)  => {
  
 }
 
-const domContainer = document.querySelector('#sell_item_container');
-ReactDOM.render(<SellItemButton />, domContainer);
+const domContainer = document.querySelector('#order_item_container');
+ReactDOM.render(<OrderItemButton />, domContainer);

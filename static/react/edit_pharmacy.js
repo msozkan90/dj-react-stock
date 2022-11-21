@@ -118,7 +118,7 @@ const EditPharmacyButton=()=> {
     return (
         <div>
 
-        <div className="card w-50 mx-auto p-4">
+        <div className="card w-100 mt-2 mx-auto p-4">
               <div className="card-header py-3 mb-3">
                   <h6 className="m-0 font-weight-bold text-primary">  
                   <i className="fa fa-plus">  </i>    Eczane Düzenle

@@ -22,13 +22,13 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Satış Geçmişi</h1>
-                    <p class="mb-4">Satış geçmişinizi kolayca görüntüleyebilrisiniz.</p>
+                    <h1 class="h3 mb-2 text-gray-800">Sipariş Geçmişi</h1>
+                    <p class="mb-4">Sipariş geçmişinizi kolayca görüntüleyebilrisiniz.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary"> Satış Geçmişi
+                            <h6 class="m-0 font-weight-bold text-primary"> Sipariş Geçmişi
                              </h6>
                         </div>
                         <div class="card-body">
@@ -40,25 +40,18 @@
                                 <thead>
                                     <tr>
                                       <th data-priority="0" class="d-none">Id</th>
-                                      <th data-priority="1">Düzenle</th>
-                                      <th data-priority="2">Eczane</th>
-                                      <th data-priority="3">Malzeme Adı</th>
-                                      <th data-priority="4">Adet</th>                    
-                                      <th data-priority="5">Tarih</th>                    
-                                      <th data-priority="6">Durum</th>                    
+
+                                      <th data-priority="1">Eczane</th>
+                                      <th data-priority="2">Malzeme Adı</th>
+                                      <th data-priority="3">Adet</th>                    
+                                      <th data-priority="4">Tarih</th>                    
+                                      <th data-priority="5">Durum</th>                    
                                     </tr>               
                                   </thead>
                                   <tbody>
                                     {% for item in items %}
                                     <tr>
-                                      <td class="d-none">{{item.id}}</td>
-                                      <td>
-                                        <a href="{% url 'items:edit_item' item.id %}">
-                                          <i
-                                            class="fa fa-pen-to-square fa-1x text-primary text-btn-size"
-                                          ></i>
-                                        </a>
-                                      </td>
+                                      <td class="d-none">{{item.id}}</td>                  
                                       <td>{{item.user}}</td>
 
                                       <td>{{item.item_name}}</td>
@@ -70,9 +63,17 @@
                                       </td>
                                       <td>
                                         {% if item.status %}
-                                        <i class="fa fa-check bg-success text-white p-1"></i>
+                                    
+                                        <button class="btn bg-success btn-sm text-white text-sm  p-1 px-2">
+                                          <i class="fa fa-check" ></i> 
+                                          <span class="text-sm text-capitalize text-white ">Onaylandı</span>
+                                        </button>
                                         {% else %}
-                                        <i class="fa fa-xmark bg-danger text-white p-1 px-2"></i>
+                                        <button class="btn btn-danger btn-sm text-white text-sm">
+                                          <i class="fa fa-clock" ></i> 
+                                          <span class=" text-sm text-capitalize text-white ">Onayla</span>
+                                        </button>
+                                      
                                         {% endif %}
                                                      
                                       </td>
@@ -83,7 +84,7 @@
                                   <tfoot>
                                     <tr >
                                       <th class="d-none">Id</th>
-                                      <th ></th>
+                              
                                       <th>Eczane</th>  
                                       <th>Malzeme Adı</th>
                                       <th>Adet</th>   

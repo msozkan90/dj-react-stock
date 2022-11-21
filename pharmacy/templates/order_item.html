@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block css %}
+{% endblock  %}
+
+
+{% block body %}
+
+ 
+
+<div id="order_item_container"></div>
+{% csrf_token %}
+{% endblock  %}
+
+
+{% block js %}
+{% endblock  %}
+{% block extra_js %}
+<script>
+    //let token = "{% csrf_token %}"
+    window.user = {
+        user:"{{ request.user }}",
+        name: "{{ request.user.username }}",
+        id: "{{ request.user.id }}",
+    }
+
+   // window.token = {
+    //    csrf_token: token
+        
+    //}
+
+
+
+</script>
+
+<script src="{% static 'react/order_item.js' %}" type="text/babel"></script> 
+{% endblock  %}
