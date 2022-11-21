@@ -3,7 +3,11 @@ from django.urls import path
 from . import views
 app_name="pharmacy"
 urlpatterns = [
+    path("confirm/order/react/<int:id>",views.confirm_order_react,name="confirm_order_react"),
     path("getItemList",views.getItemList,name="getItemList"),
+    path("getOrderList",views.getOrderList,name="getOrderList"),
+    path("getUsername/<int:id>",views.getUsername,name="getUsername"),
+    path("getItemname/<int:id>",views.getItemname,name="getItemname"),
     path("dashboard",views.dashboard,name="dashboard"),
     path("purchase/history",views.purchase_history,name="purchase_history"),
     path("sell/history",views.sell_history,name="sell_history"),
@@ -13,6 +17,7 @@ urlpatterns = [
     path("order/item",views.order_item,name="order_item"),
     path("orders",views.orders,name="orders"),
     path("sell/item/react",views.sell_item_react,name="sell_item_react"),
+
 
 
 ]

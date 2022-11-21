@@ -19,7 +19,7 @@
 
 {% block body %}
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                {% comment %} <div class="container-fluid">
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Sipariş Geçmişi</h1>
@@ -97,10 +97,28 @@
                         </div>
                     </div>
 
-                </div>
+                </div> {% endcomment %}
                 <!-- /.container-fluid -->
+                <div class="container-fluid">
+
+                  <h1 class="h3 mb-2 text-gray-800">Sipariş Geçmişi</h1>
+                  <p class="mb-4">Sipariş geçmişinizi kolayca görüntüleyebilrisiniz.</p>
+        
+                  <div class="card shadow mb-4">
+                      <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary"> Sipariş Geçmişi
+                          </h6>
+                      </div>
+                      <div class="card-body">
+                          <div class="table-responsive">
+                                  <div id="order_confirm_container"></div>
 
 
+                                </div>
+                              </div>
+                          </div>
+                
+                          </div>
 {% endblock  %}
 
 
@@ -290,4 +308,6 @@
       type="text/javascript"
       src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js">
     </script>
+
+    <script src="{% static 'react/order_confirm.js' %}" type="text/babel"></script> 
 {% endblock  %}

@@ -117,5 +117,55 @@ def order_history(request):
 
 @admin_login_required(login_url = "pharmacy:dashboard")
 def orders(request):
-    items=Order.objects.all()
-    return render(request,"order_history.html",{"items":items})
+    items=Order.objects.values()
+    return render(request,"orders.html",{"items":items})
+
+def getOrderList(request):
+
+    orders=list(Order.objects.values())
+    return JsonResponse( orders, safe=False)
+
+def getUsername(request,id):
+
+    username=User.objects.filter(id=id).first()
+    return JsonResponse( username.username, safe=False)
+
+def getItemname(request,id):
+    itemname=Items.objects.filter(id=id).first()
+    return JsonResponse( itemname.item_name, safe=False)
+
+def confirm_order_react(request,id):
+    file_array = json.loads(request.body)
+    print(file_array["id"])
+    order=Order.objects.filter(id=file_array["id"]).first()
+    item=Items.objects.filter(item_name=order.item_name).first()
+    user_instance=order.user
+    print(order.user)
+    print(order.user.id)
+    print(order.item_name)
+    print(order.quantity)
+    print(item.quantity)
+    print(item)
+    if int(item.quantity) < int(order.quantity):
+
+        return JsonResponse({"message":"Stok yeterli değildir.","color":"#f34444","type":"Başarısız"}, safe=False)
+    else:
+        storage_check=PharmacyStorage.objects.filter(user=user_instance,item_name=item).count()  
+        if storage_check == 0:
+            PharmacyStorage.objects.create(user=user_instance,quantity=order.quantity,item_name=item)
+            item.quantity = int(item.quantity) - int(order.quantity)
+            item.save()
+            ItemDistribution.objects.create(user=user_instance,item_name=item,quantity=order.quantity)
+            return JsonResponse({"message":"Dağıtım başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
+        else:
+            storage_update=PharmacyStorage.objects.filter(user=user_instance,item_name=item).first()
+            item.quantity = int(item.quantity) - int(order.quantity)
+            storage_update.quantity += int(order.quantity)
+            storage_update.save()
+            item.save()
+            ItemDistribution.objects.create(user=user_instance,item_name=item,quantity=order.quantity)
+        return JsonResponse({"message":"Dağıtım başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
+    # user_instance=User.objects.filter(id=file_array["user"]["id"]).first()
+    # item_instance=Items.objects.filter(id=file_array["item_name"]).first()
+    # document= Order.objects.create(item_name=item_instance,user=user_instance,quantity=file_array["quantity"])
+    return JsonResponse({"message":"Sipariş başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
