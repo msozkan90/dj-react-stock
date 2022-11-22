@@ -4,9 +4,12 @@ from . import views
 app_name="pharmacy"
 urlpatterns = [
     path("confirm/order/react/<int:id>",views.confirm_order_react,name="confirm_order_react"),
+    path("delete/pharmacy/react/<int:id>",views.delete_pharmacy_react,name="delete_pharmacy_react"),
+
     path("getItemList",views.getItemList,name="getItemList"),
     path("getOrderList",views.getOrderList,name="getOrderList"),
     path("getUsername/<int:id>",views.getUsername,name="getUsername"),
+    path("getUserprofile/<int:id>",views.getUserprofile,name="getUserprofile"),
     path("getItemname/<int:id>",views.getItemname,name="getItemname"),
     path("dashboard",views.dashboard,name="dashboard"),
     path("purchase/history",views.purchase_history,name="purchase_history"),

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
+from accounts.models import UserProfile
 from items.models import ItemDistribution, Items, Order,PharmacyStorage
 from django.http import HttpResponseRedirect
 from pharmacy.forms import PharmacySellForm,OrderItemForm
@@ -130,9 +131,28 @@ def getUsername(request,id):
     username=User.objects.filter(id=id).first()
     return JsonResponse( username.username, safe=False)
 
+def getUserprofile(request,id):
+
+    username=User.objects.filter(id=id).first()
+    userprofile=UserProfile.objects.filter(user=username).first()
+    return JsonResponse( userprofile.pharmacy_name, safe=False)
+
+def delete_pharmacy_react(request,id):
+    username=User.objects.filter(id=id).first()
+    # userprofile=UserProfile.objects.filter(user=username).first()
+    # userprofile.delete()
+    username.delete()
+    return JsonResponse({"message":"Eczane başarılı bir şekilde silindi.","color":"#89D99D","type":"Başarılı"}, safe=False)
+
+
 def getItemname(request,id):
     itemname=Items.objects.filter(id=id).first()
     return JsonResponse( itemname.item_name, safe=False)
+
+
+
+
+
 
 def confirm_order_react(request,id):
     file_array = json.loads(request.body)

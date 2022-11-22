@@ -14,7 +14,7 @@ class Items(models.Model):
 
 
 class ItemDistribution(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL,null=True)
     item_name = models.ForeignKey(Items, on_delete=models.SET_NULL,null=True)
     quantity=models.DecimalField(max_digits=10,decimal_places=2)
     status=models.BooleanField(default=True)

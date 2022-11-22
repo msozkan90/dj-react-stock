@@ -34,67 +34,11 @@
                              </h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table
-                                id="example"
-                                class="table table-striped nowrap"
-                                style="width: 100%!important">
-                                <thead>
-                                    <tr>
-                                      <th data-priority="0" class="d-none">Id</th>
-                                      <th data-priority="1">Düzenle</th>
-                                      <th data-priority="2">Kullanıcı Adı</th>
-                                      <th data-priority="3">Eczane Adı</th>                     
-                                      <th data-priority="4">Adres</th>                     
-                                                 
-                                    </tr>               
-                                  </thead>
-                                  <tbody>
-                                    {% for pharmacy in pharmacys %}
-                                    {% if pharmacy.userprofile.status == 1 %}
-                                    {% else %}
-                                    
-                                    <tr>
-                                      <td class="d-none">{{pharmacy.id}}</td>
-                                      <td>
-                                        <a href="{% url 'accounts:edit_pharmacy' pharmacy.id %}">
-                                          <i
-                                            class="fa fa-pen-to-square fa-1x text-primary text-btn-size"
-                                          ></i>
-                                        </a>
-                                      </td>
-                                      <td>{{pharmacy.username}}</td>
-                                      <td>
-                                        {{pharmacy.userprofile.pharmacy_name}}                  
-                                      </td>
-                                      <td>
-                                        {% if pharmacy.userprofile.address == none %}
-                                          -
-                                        {% else %}  
-                                        {{pharmacy.userprofile.address}}                
-                                        {% endif %}
-                                      </td>
-            
-                                                   
-                                    </tr>
-                                    {% endif %}
-                                    {% endfor %}
-                                  
-                                  </tbody>
-                                  <tfoot>
-                                    <tr >
-                                      <th class="d-none">Id</th>
-                                      <th ></th>
-                                      <th>Kullanıcı Adı</th>                                
-                                      <th>Eczane Adı</th>               
-                                      <th>Adres</th>               
-                                                 
-                    
-                                    </tr>
-                                  </tfoot>
-                                 
-                                </table>
+                          <div className="table-responsive">
+
+                              <div id="pharmacy_list_container"></div>
                             </div>
+                   
                         </div>
                     </div>
 
@@ -291,4 +235,5 @@
       type="text/javascript"
       src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js">
     </script>
+    <script src="{% static 'react/pharmacy_list.js' %}" type="text/babel"></script> 
 {% endblock  %}
