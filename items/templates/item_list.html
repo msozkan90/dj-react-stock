@@ -35,57 +35,11 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table
-                                id="example"
-                                class="table table-striped nowrap"
-                                style="width: 100%!important">
-                                <thead>
-                                    <tr>
-                                      <th data-priority="0" class="d-none">Id</th>
-                                      <th data-priority="1">Düzenle</th>
-                                      <th data-priority="2">Malzeme Adı</th>
-                                      <th data-priority="3">Adet</th>                    
-                                      <th data-priority="4">Durum</th>                    
-                                    </tr>               
-                                  </thead>
-                                  <tbody>
-                                    {% for item in items %}
-                                    <tr>
-                                      <td class="d-none">{{item.id}}</td>
-                                      <td>
-                                        <a href="{% url 'items:edit_item' item.id %}">
-                                          <i
-                                            class="fa fa-pen-to-square fa-1x text-primary text-btn-size"
-                                          ></i>
-                                        </a>
-                                      </td>
-                                      <td>{{item.item_name}}</td>
-                                      <td>
-                                        {{ item.quantity | stringformat:'d' }}                 
-                                      </td>
-                                      <td>
-                                        {% if item.status %}
-                                        <i class="fa fa-check bg-success text-white p-1"></i>
-                                        {% else %}
-                                        <i class="fa fa-xmark bg-danger text-white p-1 px-2"></i>
-                                        {% endif %}
-                                                     
-                                      </td>
-                                                   
-                                    </tr>
-                                    {% endfor %}
-                                  </tbody>
-                                  <tfoot>
-                                    <tr >
-                                      <th class="d-none">Id</th>
-                                      <th ></th>
-                                      <th>Malzeme Adı</th>
-                                      <th>Adet</th>   
-                                      <th></th>               
-                    
-                                    </tr>
-                                  </tfoot>
-                                </table>
+
+                              <div id="item_list_container"></div>
+
+
+                          
                             </div>
                         </div>
                     </div>
@@ -281,4 +235,6 @@
       type="text/javascript"
       src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js">
     </script>
+
+    <script src="{% static 'react/item_list.js' %}" type="text/babel"></script> 
 {% endblock  %}

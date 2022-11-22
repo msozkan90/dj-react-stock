@@ -13,6 +13,7 @@ urlpatterns = [
     path("item/distribution/react",views.item_distribution_react,name="item_distribution_react"),
     path("edit/item/<int:pk>/react",views.edit_item_react,name="edit_item_react"),
 
+    path("delete/item/react/<int:id>",views.delete_item_react,name="delete_item_react"),
 
     path("item/charts",views.item_charts,name="item_charts"),
     path("item/distribution",views.item_distribution,name="item_distribution"),

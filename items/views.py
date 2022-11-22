@@ -37,6 +37,11 @@ def getUserList(request):
 
 
 
+def delete_item_react(request,id):
+    item=Items.objects.filter(id=id).first()
+    item.delete()
+    return JsonResponse({"message":"Malzeme başarılı bir şekilde silindi.","color":"#89D99D","type":"Başarılı"}, safe=False)
+
 
 def item_distribution_react(request):
     file_array = json.loads(request.body)
