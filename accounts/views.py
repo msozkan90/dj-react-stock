@@ -5,9 +5,7 @@ from items.models import PharmacyStorage
 from .forms import CreateUserForm,LoginUserForm, UpdateUserForm,UserProfileForm
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login,logout,authenticate
-from django.contrib.auth.decorators import login_required
 from pharmacy.utils import admin_login_required
 import json
 from django.http import JsonResponse
@@ -142,8 +140,7 @@ def edit_pharmacy(request,pk):
     form=UpdateUserForm(request.POST or None,instance = instance)
     form_profile=UserProfileForm(request.POST or None,instance = instance_profile)
     if request.method == 'POST':
-        print(form_profile.errors)
-        print(form.errors)
+
         if form.is_valid and form_profile.is_valid:
 
             form.save()
@@ -176,13 +173,6 @@ def edit_pharmacy_react(request,pk):
     pharmacy.save()
     pharmacy_profile.save()
     return JsonResponse({"message":"Eczane başarılı bir şekilde güncellendi.","color":"#89D99D","type":"Başarılı"}, safe=False)
-
-
-
-
-
-
-
 
 def register(request):
     form=CreateUserForm()

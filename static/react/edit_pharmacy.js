@@ -19,9 +19,6 @@ const EditPharmacyButton=()=> {
 
 
 
-  console.log(screenStates.pharmacy)
-  console.log(screenStates.pharmacy_profile)
-
   const handleInputs = (e) =>{
     setScreenStates({...screenStates,[e.target.name]:e.target.value})
 
@@ -106,7 +103,7 @@ const EditPharmacyButton=()=> {
             resetOnHover: true,
             transitionIn: 'flipInX',
             transitionOut: 'flipOutX',});
-          console.log('ERROR:', error)
+        
         })
     
       }

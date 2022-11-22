@@ -1,9 +1,6 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login,logout,authenticate
-from django.contrib.auth.decorators import login_required
 from .models import ItemDistribution, Items,PharmacyStorage
 from .forms import ItemForm,ItemDistributionForm
 from django.http import HttpResponseRedirect
@@ -24,10 +21,7 @@ def add_item(request):
 
 def add_item_react(request):
     file_array = json.loads(request.body)
-    print(file_array)
-    #for i in file_array["file_array"]:
     document= Items.objects.create(item_name=file_array["item_name"],status=file_array["status"],quantity=file_array["quantity"])
-    print(document)
     return JsonResponse({"message":"Malzeme başarılı bir şekilde oluşturuldu.","color":"#89D99D","type":"Başarılı"}, safe=False)
 
 
@@ -45,7 +39,6 @@ def delete_item_react(request,id):
 
 def item_distribution_react(request):
     file_array = json.loads(request.body)
-    print(file_array)
     user= file_array["user"]
     quantity= file_array["quantity"]
     item_name= file_array["item_name"]
@@ -130,7 +123,6 @@ def edit_item(request,pk):
     instance = get_object_or_404(Items,id = pk)
     form=ItemForm(request.POST or None,instance = instance)
     if request.method == 'POST':
-        print(form.errors)
         if form.is_valid():
                 form.save()
                 messages.success(request,"Malzeme başarılı bir şekilde düzenlendi.")

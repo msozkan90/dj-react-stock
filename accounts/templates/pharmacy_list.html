@@ -18,14 +18,13 @@
 
 
 {% block body %}
-                <!-- Begin Page Content -->
+          
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
+                   
                     <h1 class="h3 mb-2 text-gray-800">Eczane Listesi</h1>
                     <p class="mb-4">Eczaneleri listeleyip kolayca değişiklikler yapabilirsiniz. </p>
 
-                    <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">  <a class="btn btn-primary" href="{% url 'accounts:add_pharmacy'%}">
@@ -43,14 +42,14 @@
                     </div>
 
                 </div>
-                <!-- /.container-fluid -->
+            
 
 
 {% endblock  %}
 
 
 {% block js %}
-    <!-- Page level plugins -->
+ 
     <script>
         $(document).ready(function () {  
           $.fn.dataTable.moment( 'D/M/YYYY' ); 

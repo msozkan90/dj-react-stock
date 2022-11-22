@@ -48,9 +48,7 @@ const AddItemButton=()=> {
   }
 
   const AddItem =() =>{
-    console.log(item_name)
-    console.log(quantity)
-    console.log(status)
+
     var csrftoken = getCookie('csrftoken')
       if (item_name == '' || quantity == ''   ) {
         iziToast.show({message:"Lütfen bilgileri doğru giriniz", position: "topRight",
@@ -107,7 +105,7 @@ const AddItemButton=()=> {
             resetOnHover: true,
             transitionIn: 'flipInX',
             transitionOut: 'flipOutX',});
-          console.log('ERROR:', error)
+      
         })
     
       }

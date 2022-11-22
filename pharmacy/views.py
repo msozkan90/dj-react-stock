@@ -1,8 +1,6 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from accounts.models import UserProfile
 from items.models import ItemDistribution, Items, Order,PharmacyStorage
@@ -48,7 +46,6 @@ def sell_item(request):
     form.user=request.user
 
     if request.method == 'POST':
-        print(form.errors)
         if form.is_valid():
             user=request.user           
             quantity= form.data.get('quantity')
@@ -159,11 +156,7 @@ def confirm_order_react(request,id):
     order=Order.objects.filter(id=file_array["id"]).first()
     item=Items.objects.filter(item_name=order.item_name).first()
     user_instance=order.user
-    print(order.quantity)
-    print(item.quantity)
-
     if int(item.quantity) < int(order.quantity):
-        print("burda")
         return JsonResponse({"message":"Stok yeterli değildir.","color":"#f34444","type":"Başarısız"}, safe=False)
     else:
         storage_check=PharmacyStorage.objects.filter(user=user_instance,item_name=item).count()  

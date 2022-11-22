@@ -41,7 +41,7 @@ const PharmacyDeleteButton = () => {
           transitionIn: "flipInX",
           transitionOut: "flipOutX",
         });
-        console.log("ERROR:", error);
+    
       });
   };
   const getCookie = (name) => {
@@ -78,7 +78,7 @@ const PharmacyDeleteButton = () => {
 
       .catch(function (error) {
 
-        console.log("ERROR:", error);
+  
       });
   };
   const DeletePharmacy = (id) => {
@@ -131,7 +131,7 @@ const PharmacyDeleteButton = () => {
           transitionIn: "flipInX",
           transitionOut: "flipOutX",
         });
-        console.log("ERROR:", error);
+
       });
   };
 

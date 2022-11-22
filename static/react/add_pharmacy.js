@@ -132,7 +132,7 @@ const getCookie = (name)  => {
             resetOnHover: true,
             transitionIn: 'flipInX',
             transitionOut: 'flipOutX',});
-          console.log('ERROR:', error)
+        
         })
     
       }

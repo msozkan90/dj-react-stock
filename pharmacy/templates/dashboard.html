@@ -64,7 +64,10 @@
                                     <tr>
                                       <th data-priority="0" class="d-none">Id</th>
                                       <th data-priority="1">Düzenle</th>
+                                      {% if request.user.is_superuser %}
+                                      {% else %}
                                       <th data-priority="2">Eczane</th>
+                                      {% endif %}
                                       <th data-priority="3">Malzeme Adı</th>
                                       <th data-priority="4">Adet</th>                    
                                       <th data-priority="5">Tarih</th>                    
@@ -82,8 +85,10 @@
                                           ></i>
                                         </a>
                                       </td> 
+                                      {% if request.user.is_superuser %}
+                                      {% else %}
                                       <td>{{item.user}}</td>
-
+                                      {% endif %}
                                       <td>{{item.item_name}}</td>
                                       <td>
                                         {{ item.quantity | stringformat:'d' }}                  
@@ -107,7 +112,10 @@
                                     <tr >
                                       <th class="d-none">Id</th>
                                       <th ></th>
-                                      <th>Eczane</th>  
+                                      {% if request.user.is_superuser %}
+                                      {% else %}
+                                      <th>Eczane</th>
+                                      {% endif %}  
                                       <th>Malzeme Adı</th>
                                       <th>Adet</th>   
                                       <th>Tarih</th>                      

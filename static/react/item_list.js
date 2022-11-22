@@ -41,7 +41,7 @@ const ItemDeleteButton = () => {
           transitionIn: "flipInX",
           transitionOut: "flipOutX",
         });
-        console.log("ERROR:", error);
+      
       });
   };
   const getCookie = (name) => {
@@ -110,7 +110,7 @@ const ItemDeleteButton = () => {
           transitionIn: "flipInX",
           transitionOut: "flipOutX",
         });
-        console.log("ERROR:", error);
+        
       });
   };
 
@@ -124,9 +124,9 @@ const ItemDeleteButton = () => {
                     <th data-priority="1">Düzenle</th>
                     <th data-priority="2">Malzeme Adı</th>
                     <th data-priority="3">Adet</th>                    
-                    <th data-priority="4">Tarih</th>  
-                    <th data-priority="5">Durum</th>  
-                    <th data-priority="6">Sil</th>  
+               
+                    <th data-priority="4">Durum</th>  
+                    <th data-priority="5">Sil</th>  
                   </tr>
                 </thead>
                 <tbody>
@@ -145,7 +145,7 @@ const ItemDeleteButton = () => {
                           {(order.item_name)}
                         </td>
                         <td>{parseFloat(`${order.quantity}`)}</td>
-                        <td>{order.created_at}</td>
+                  
                         <td>
                           {order.status ? (
                             <i className="fa fa-check bg-success text-white p-1"></i>
@@ -178,7 +178,7 @@ const ItemDeleteButton = () => {
                   
                     <th>Malzeme Adı</th>
                     <th>Adet</th>   
-                    <th>Tarih</th> 
+                 
                     <th ></th>               
                     <th ></th>               
 

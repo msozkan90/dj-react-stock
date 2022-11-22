@@ -86,7 +86,7 @@ const ItemDistributionButton=()=> {
             resetOnHover: true,
             transitionIn: 'flipInX',
             transitionOut: 'flipOutX',});
-          console.log('ERROR:', error)
+       
         })
     
       }
@@ -137,7 +137,7 @@ const ItemDistributionButton=()=> {
         resetOnHover: true,
         transitionIn: 'flipInX',
         transitionOut: 'flipOutX',});
-      console.log('ERROR:', error)
+  
     })
   
   
@@ -171,7 +171,7 @@ const ItemDistributionButton=()=> {
           resetOnHover: true,
           transitionIn: 'flipInX',
           transitionOut: 'flipOutX',});
-        console.log('ERROR:', error)
+    
       })
   
     

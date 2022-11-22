@@ -27,21 +27,7 @@ class PharmacySellForm(forms.ModelForm):
          
         }
 
-        error_messages = {
- 
-            'item_name': {
-                'max_length': _("Dosya no alanı 30 karakterden fazla olamaz."),
-                'unique': _("Bu dosya no daha önceden kullanılmış."),
-            
-            },
-            'quantity': {
-                'max_length': _("Başvuran alanı 30 karakterden fazla olamaz."),       
-                'required':"Lütfen başvuran kısmını doldurunuz."
-            },
 
-
-
-        }
 
 
 
@@ -71,18 +57,3 @@ class OrderItemForm(forms.ModelForm):
          
         }
 
-        error_messages = {
- 
-            'item_name': {
-                'max_length': _("Dosya no alanı 30 karakterden fazla olamaz."),
-                'unique': _("Bu dosya no daha önceden kullanılmış."),
-            
-            },
-            'quantity': {
-                'max_length': _("Başvuran alanı 30 karakterden fazla olamaz."),       
-                'required':"Lütfen başvuran kısmını doldurunuz."
-            },
-
-
-
-        }

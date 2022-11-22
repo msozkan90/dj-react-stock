@@ -15,11 +15,6 @@ const EditItemButton=()=> {
   })
 
 
-
-  console.log(screenStates.item)
-  console.log(screenStates.item_name)
-  console.log(screenStates.quantity)
-  console.log(screenStates.status)
   const handleInputs = (e) =>{
     setScreenStates({...screenStates,[e.target.name]:e.target.value})
 
@@ -60,7 +55,7 @@ const EditItemButton=()=> {
         progressBarColor: 'black',});
       }
       else{
-        console.log(`http://localhost:8000/edit/item/${screenStates.id}/react`)
+       
         fetch(`http://localhost:8000/edit/item/${screenStates.id}/react`, {
           'method':'POST',
           headers: {
@@ -71,14 +66,14 @@ const EditItemButton=()=> {
     
         }).then(resp => resp.json())
         .then(resp =>             
-          (iziToast.show({message:"Malzeme başarılı bir şekilde eklendi", position: "topRight",
+          (iziToast.show({message:resp["message"], position: "topRight",
           messageColor: 'black',
           messageSize: '16',
-          title: 'Başarılı',
+          title: resp["type"],
           titleColor: 'black',
           titleSize: '16',
           maxWidth: '600',
-          backgroundColor: '#89D99D',
+          backgroundColor: resp["color"],
           iconColor: '#fff',
           progressBarColor: 'black',
           resetOnHover: true,
@@ -98,7 +93,7 @@ const EditItemButton=()=> {
             resetOnHover: true,
             transitionIn: 'flipInX',
             transitionOut: 'flipOutX',});
-          console.log('ERROR:', error)
+     
         })
     
       }

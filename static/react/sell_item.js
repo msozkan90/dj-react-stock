@@ -32,12 +32,7 @@ const SellItemButton=()=> {
   const getToken = ()  => {
     var csrftoken = getCookie('csrftoken')
     let input_token=document.getElementsByName("csrfmiddlewaretoken")[0]
-    // console.log(input_token)
-    // console.log(csrftoken)
 
-    // input_token.innerHTML = csrftoken
-    // input_token.value = csrftoken
-    // console.log(input_token)
 }
 
 
@@ -115,7 +110,7 @@ const getCookie = (name)  => {
             resetOnHover: true,
             transitionIn: 'flipInX',
             transitionOut: 'flipOutX',});
-          console.log('ERROR:', error)
+       
         })
     
       }
@@ -151,7 +146,7 @@ const getCookie = (name)  => {
           resetOnHover: true,
           transitionIn: 'flipInX',
           transitionOut: 'flipOutX',});
-        console.log('ERROR:', error)
+      
       })
   
     

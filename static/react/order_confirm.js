@@ -45,7 +45,7 @@ const OrderConfirmButton = () => {
           transitionIn: "flipInX",
           transitionOut: "flipOutX",
         });
-        console.log("ERROR:", error);
+       
       });
   };
   const getItemname = (id, key) => {
@@ -82,9 +82,9 @@ const OrderConfirmButton = () => {
           transitionIn: "flipInX",
           transitionOut: "flipOutX",
         });
-        console.log("ERROR:", error);
+       
       });
-    console.log(response);
+  
     return response;
   };
 
@@ -117,7 +117,7 @@ const OrderConfirmButton = () => {
           transitionIn: "flipInX",
           transitionOut: "flipOutX",
         });
-        console.log("ERROR:", error);
+     
       });
   };
   const getCookie = (name) => {
@@ -138,8 +138,7 @@ const OrderConfirmButton = () => {
 
   const ConfirmOrder = (id) => {
     var csrftoken = getCookie("csrftoken");
-    console.log(id);
-
+   
     fetch(`http://localhost:8000/confirm/order/react/${id}`, {
       method: "POST",
       headers: {
@@ -186,7 +185,7 @@ const OrderConfirmButton = () => {
           transitionIn: "flipInX",
           transitionOut: "flipOutX",
         });
-        console.log("ERROR:", error);
+   
       });
   };
 
@@ -245,18 +244,7 @@ const OrderConfirmButton = () => {
                       </button>
                     </form>
                   )}
-                  {/* {order.status ? (
-                                    <button className="btn bg-success btn-sm text-white text-sm  p-1 px-2">
-                                    <i className="fa fa-check" ></i> 
-                                    <span className="text-sm text-capitalize text-white ">Onaylandı</span>
-                                  </button>
-                                    ) : (
-                                      <button onClick={()=>{ConfirmOrder(order.id)}} className="btn btn-danger btn-sm text-white text-sm">
-                                      <i className="fa fa-clock" > </i> 
-                                      <span className=" text-sm text-capitalize text-white ">Onayla</span>
-                                   </button>
-                                    )} 
-                                  {/* <button onClick={()=>{setScreenStates({...screenStates,status:!screenStates.status})}} className={order.status ? 'btn btn-success' : 'btn btn-danger'}>{order.status ? 'Success' : 'danger'}</button> */}
+                
                 </td>
               </tr>
             );
