@@ -4,33 +4,59 @@ const e = React.createElement;
 
 
 
-
-// import React, {useState, useEffect} from 'react'
 const AddPharmacyButton=()=> {
 
-  const [screenStates, setScreenStates] = React.useState({
-    username: "",
-    email: "",
-    password1: "",
-    password2: "",
-    pharmacy_name: "",
-    address: "",
+  // const [screenStates, setScreenStates] = React.useState({
+  //   username: "",
+  //   email: "",
+  //   password1: "",
+  //   password2: "",
+  //   pharmacy_name: "",
+  //   address: "",
     
-  })
+  // })
+
+  const [username, setUsername] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password1, setPassword] = React.useState("");
+  const [password2, setPassword2] = React.useState("");
+  const [pharmacy_name, setPharmacyName] = React.useState("");
+  const [address, setAdress] = React.useState("");
+
 
   React.useEffect(() => {
-  
 
-   
 },[])
 
+const handlePharmacy = (e) =>{
+  setPharmacyName(e.target.value)
+}
 
-
-  const handleInputs = (e) =>{
-    setScreenStates({...screenStates,[e.target.name]:e.target.value})
-
+  const handleAdress = (e) =>{
+    setAdress(e.target.value)
+  }
+  const handleUsername = (e) =>{
+    setUsername(e.target.value)
+  }
+  const handleEmail = (e) =>{
+    setEmail(e.target.value)
+  }
+  const handlePassword1 = (e) =>{
+    setPassword(e.target.value)
+  }
+  const handlePassword2 = (e) =>{
+    setPassword2(e.target.value)
   }
 
+  const clearState = () =>{
+    setPassword2("")
+    setPassword("")
+    setEmail("")
+    setUsername("")
+    setAdress("")
+    setPharmacyName("")
+
+  }
 
 
 const getCookie = (name)  => {
@@ -52,7 +78,7 @@ const getCookie = (name)  => {
 
   const AddPharmacy =() =>{
       var csrftoken = getCookie('csrftoken')
-      if (screenStates.username == '' || screenStates.email == '' || screenStates.password1 == '' || screenStates.password2 == '' || screenStates.pharmacy_name == ''   ) {
+      if (username == '' || email == '' || password1 == '' || password2 == '' || pharmacy_name == ''   ) {
         iziToast.show({message:"Lütfen bilgileri doğru giriniz", position: "topRight",
         messageColor: 'black',
         messageSize: '16',
@@ -71,7 +97,7 @@ const getCookie = (name)  => {
               'Content-Type':'application/json',
               'X-CSRFToken':csrftoken,  
             }, 
-            body:JSON.stringify({"username":screenStates.username,"email":screenStates.email,"password1":screenStates.password1,"password2":screenStates.password2,"pharmacy_name":screenStates.pharmacy_name,"address":screenStates.address})
+            body:JSON.stringify({"username":username,"email":email,"password1":password1,"password2":password2,"pharmacy_name":pharmacy_name,"address":address})
 
         }).then(resp => resp.json())
         
@@ -91,6 +117,7 @@ const getCookie = (name)  => {
           resetOnHover: true,
           transitionIn: 'flipInX',
           transitionOut: 'flipOutX',})))
+          .then(resp => clearState())
          .catch(function(error){
             iziToast.show({message:"Lütfen formu doğru bir şekilde doldurun", position: "topRight",
             messageColor: 'black',
@@ -134,7 +161,7 @@ const getCookie = (name)  => {
                     Username
                     </label>
                       
-                    <input onChange={handleInputs} type="text" name="username" className="form-control form-control-user" placeholder="Username" maxLength="150" autoFocus="" required="" id="id_username" />
+                    <input onChange={handleUsername} value={username} type="text" name="username" className="form-control form-control-user" placeholder="Username" maxLength="150" autoFocus="" required="" id="id_username" />
                      
            
             </div>
@@ -143,7 +170,7 @@ const getCookie = (name)  => {
                     Email
                     </label>
                   
-                <input onChange={handleInputs} type="email" name="email" className="form-control form-control-user" placeholder="Email" max="40" required="" id="id_email" />
+                <input onChange={handleEmail} value={email} type="email" name="email" className="form-control form-control-user" placeholder="Email" max="40" required="" id="id_email" />
                  
             </div>
             <div className="col-md-12 mt-2">
@@ -151,7 +178,7 @@ const getCookie = (name)  => {
                     Password
                     </label>
                   
-                <input onChange={handleInputs} type="password" name="password1" className="form-control form-control-user" placeholder="Password" required="" id="id_password1" />
+                <input onChange={handlePassword1} value={password1} type="password" name="password1" className="form-control form-control-user" placeholder="Password" required="" id="id_password1" />
                  
                 </div>
                 <div className="col-md-12 mt-2">
@@ -159,7 +186,7 @@ const getCookie = (name)  => {
                         Password Confirmation
                         </label>
                       
-                    <input onChange={handleInputs} type="password" name="password2" className="form-control form-control-user" placeholder="Password Confirmation" required="" id="id_password2" />
+                    <input onChange={handlePassword2} value={password2} type="password" name="password2" className="form-control form-control-user" placeholder="Password Confirmation" required="" id="id_password2" />
                      
     
                     </div>
@@ -170,7 +197,7 @@ const getCookie = (name)  => {
                         Eczane Adı
                         </label>
                       
-                    <input onChange={handleInputs} type="text" name="pharmacy_name" className="form-control form-control-user mb-2  " placeholder="Eczane Adı" required="" id="id_pharmacy_name" />
+                    <input onChange={handlePharmacy} value={pharmacy_name} type="text" name="pharmacy_name" className="form-control form-control-user mb-2  " placeholder="Eczane Adı" required="" id="id_pharmacy_name" />
                      
     
                     </div>
@@ -180,7 +207,7 @@ const getCookie = (name)  => {
                         Adres
                         </label>
                       
-                    <textarea onChange={handleInputs} name="address" cols="10" rows="7" className="form-control form-control-user mb-2 " placeholder="Adres" maxLength="300" id="id_address"></textarea>
+                    <textarea onChange={handleAdress} value={address} name="address" cols="10" rows="7" className="form-control form-control-user mb-2 " placeholder="Adres" maxLength="300" id="id_address"></textarea>
                      
     
                     </div>

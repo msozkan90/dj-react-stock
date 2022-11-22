@@ -59,9 +59,10 @@ const getCookie = (name)  => {
 }
 
 
-  const OrderItem =() =>{
+  const OrderItem =(e) =>{
+ 
       var csrftoken = getCookie('csrftoken')
-      if (screenStates.item_name == '' || screenStates.quantity == ''   ) {
+      if (screenStates.item_name == '' || screenStates.quantity == ''  || e.target.firstChild.firstChild.firstChild.nextElementSibling.value == '' ) {
         iziToast.show({message:"Lütfen bilgileri doğru giriniz", position: "topRight",
         messageColor: 'black',
         messageSize: '16',
@@ -100,6 +101,7 @@ const getCookie = (name)  => {
           resetOnHover: true,
           transitionIn: 'flipInX',
           transitionOut: 'flipOutX',})))
+          .then(e.target.reset())
          .catch(function(error){
             iziToast.show({message:"Lütfen formu doğru bir şekilde doldurun", position: "topRight",
             messageColor: 'black',
@@ -169,7 +171,7 @@ const getCookie = (name)  => {
               <form method="post" action="" onSubmit={(e)=>{
                 e.preventDefault()
                 
-                OrderItem()
+                OrderItem(e)
               }}>
                 
                   <div className="row ">

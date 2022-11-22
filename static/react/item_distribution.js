@@ -29,9 +29,10 @@ const ItemDistributionButton=()=> {
 
   
 
-  const ItemDistribution =() =>{
+  const ItemDistribution =(e) =>{
+  
     var csrftoken = getCookie('csrftoken')
-      if (screenStates.item_name == '' || screenStates.quantity == ''  ||  user_list == []) {
+      if (screenStates.item_name == '' || screenStates.quantity == ''  ||  user_list == [] || e.target.firstChild.firstChild.firstChild.nextElementSibling.value == '') {
         iziToast.show({message:"Lütfen bilgileri doğru giriniz", position: "topRight",
         messageColor: 'black',
         messageSize: '16',
@@ -70,6 +71,7 @@ const ItemDistributionButton=()=> {
           resetOnHover: true,
           transitionIn: 'flipInX',
           transitionOut: 'flipOutX',})))
+          .then(e.target.reset())
          .catch(function(error){
             iziToast.show({message:"Lütfen formu doğru bir şekilde doldurun", position: "topRight",
             messageColor: 'black',
@@ -188,9 +190,9 @@ const ItemDistributionButton=()=> {
               </div>
               <form method="post" action="" onSubmit={(e)=>{
                 e.preventDefault()
-                ItemDistribution()
+                ItemDistribution(e)
               }}>
-                  <input type="hidden" name="csrfmiddlewaretoken" value="l9FDjZA5JB9DqJdP5KyU5YjH7JZzLKWffOxlWZfm8IPejcThoF18YfBqeS3fpqLf"/>
+                  
 
                   <div className="row ">
                   <div className="col-md-12">

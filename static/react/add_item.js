@@ -4,19 +4,31 @@ const e = React.createElement;
 
 const AddItemButton=()=> {
 
-  const [screenStates, setScreenStates ] = React.useState({
-    item_name: "",
-    quantity: 0,
-    status:false
-  })
-  const handleInputs = (e) =>{
-    setScreenStates({...screenStates,[e.target.name]:e.target.value})
+
+  const [item_name, setItemName] = React.useState("");
+  const [quantity, setQuantity] = React.useState(0);
+  const [status, setStatus] = React.useState(false);
+  const handleItemInputs = (e) =>{
+
+    setItemName(e.target.value)
+  }
+  const handleQuantityInputs = (e) =>{
+    setQuantity(e.target.value)
+   
 
   }
 
   const handleCheckbox = (e) =>{
-    setScreenStates({...screenStates,[e.target.name]:e.target.checked})
+
+    setStatus(e.target.checked)
     
+
+  }
+
+  const clearState = () =>{
+    setStatus(false)
+    setQuantity(0)
+    setItemName("")
   }
 
   const getCookie = (name)  => {
@@ -34,16 +46,13 @@ const AddItemButton=()=> {
     }
     return cookieValue;
   }
-  const clearState = () => {
-    console.log(screenStates.item_name)
-    screenStates.item_name=""
-    setScreenStates({ ...screenStates });
-    setScreenStates({...screenStates,["item_name"]:""})
-    console.log(screenStates.item_name)
-  };
+
   const AddItem =() =>{
+    console.log(item_name)
+    console.log(quantity)
+    console.log(status)
     var csrftoken = getCookie('csrftoken')
-      if (screenStates.item_name == '' || screenStates.quantity == ''   ) {
+      if (item_name == '' || quantity == ''   ) {
         iziToast.show({message:"Lütfen bilgileri doğru giriniz", position: "topRight",
         messageColor: 'black',
         messageSize: '16',
@@ -62,7 +71,7 @@ const AddItemButton=()=> {
               'Content-Type':'application/json',
               'X-CSRFToken':csrftoken,  
             }, 
-            body:JSON.stringify({"item_name":screenStates.item_name,"quantity":screenStates.quantity,"status":screenStates.status})
+            body:JSON.stringify({"item_name":item_name,"quantity":quantity,"status":status})
     
         }).then(resp => resp.json())
         .then(resp =>             
@@ -80,7 +89,8 @@ const AddItemButton=()=> {
           transitionIn: 'flipInX',
           transitionOut: 'flipOutX',})
           ))
-          .then(clearState)
+          .then(resp => clearState())
+       
       
           
          .catch(function(error){
@@ -128,7 +138,7 @@ const AddItemButton=()=> {
                           Malzeme Adı
                           </label>               
                           
-                      <input type="text" name="item_name" onChange={handleInputs} className="form-control form-control-user " placeholder="Malzeme Adı" maxLength="60" required="" id="id_item_name" />  
+                      <input type="text" name="item_name" onChange={handleItemInputs} value={item_name} className="form-control form-control-user " placeholder="Malzeme Adı" maxLength="60" required="" id="id_item_name" />  
                               
                       </div>
                       <div className="col-md-12 mt-2">
@@ -136,7 +146,7 @@ const AddItemButton=()=> {
                           Adet
                       </label>
                     
-                      <input type="number"  name="quantity" onChange={handleInputs} className="form-control form-control-user " placeholder="Adet" required="" id="id_quantity"/>   
+                      <input type="number"  name="quantity" onChange={handleQuantityInputs} value={quantity} className="form-control form-control-user " placeholder="Adet" required="" id="id_quantity"/>   
                       
                       </div>
                       <div className="col-md-12 mt-2">
@@ -144,7 +154,7 @@ const AddItemButton=()=> {
                               Durum
                           </label>
                        
-                          <input onChange={handleCheckbox} type="checkbox" name="status" className="form-control-user mt-3 ml-2 " placeholder="Durum" id="id_status" checked={screenStates.status}/>   
+                          <input onChange={handleCheckbox} type="checkbox" name="status" className="form-control-user mt-3 ml-2 " placeholder="Durum" id="id_status" checked={status}/>   
                           
                           </div>
                   </div>
