@@ -6,9 +6,6 @@ const OrderConfirmButton = () => {
   const [change, setChange] = React.useState(null);
 
   const [order_list, setUserList] = React.useState([]);
-  React.useEffect(() => {
-    getOrderList();
-  }, []);
 
   React.useEffect(() => {
     getOrderList();
@@ -212,15 +209,15 @@ const OrderConfirmButton = () => {
         <tbody>
           {order_list.map((order, key) => {
             return (
-              <tr>
-                <td className="d-none"></td>
+              <tr key={key}>
+                <td className="d-none"  ></td>
                 <td className="getusername">
                   {getUsername(order.user_id, key)}
                 </td>
                 <td className="getitemname">
                   {getItemname(order.item_name_id, key)}
                 </td>
-                <td>{order.quantity}</td>
+                <td>{parseFloat(`${order.quantity}`)}</td>
                 <td>{order.created_at}</td>
                 <td>
                   {order.status ? (

@@ -80,10 +80,30 @@ def add_pharmacy(request):
                     return redirect("accounts:add_pharmacy")
     return render(request,"add_pharmacy.html",{"form":form,"form_profile":form_profile})
 
+
+import base64
+import hashlib
+import secrets
+
+ALGORITHM = "pbkdf2_sha256"
+def hash_password(password, salt=None, iterations=260000):
+    if salt is None:
+        salt = secrets.token_hex(16)
+    assert salt and isinstance(salt, str) and "$" not in salt
+    assert isinstance(password, str)
+    pw_hash = hashlib.pbkdf2_hmac(
+        "sha256", password.encode("utf-8"), salt.encode("utf-8"), iterations
+    )
+    b64_hash = base64.b64encode(pw_hash).decode("ascii").strip()
+    return "{}${}${}${}".format(ALGORITHM, iterations, salt, b64_hash)
+
+
+
 def add_pharmacy_react(request):
  
     file_array = json.loads(request.body)
     password1= file_array['password1']
+    password_hash=hash_password(file_array['password1'])
     password2= file_array['password2']
     username= file_array['username']
     email = file_array['email']
@@ -101,7 +121,7 @@ def add_pharmacy_react(request):
         if(email_check):
            
                 return JsonResponse({"message":"Bu email adresi kullanılmış.","color":"#f34444","type":"Başarısız"}, safe=False)
-        user=User.objects.create(username=username,password=password1,email=email)
+        user=User.objects.create(username=username,password=password_hash,email=email)
         user.save()
         user.userprofile.pharmacy_name=pharmacy_name
         user.userprofile.address=address
@@ -110,15 +130,7 @@ def add_pharmacy_react(request):
         return JsonResponse({"message":"Eczane başarılı bir şekilde eklendi.","color":"#89D99D","type":"Başarılı"}, safe=False)
 
     except(ValueError):
-        if(password1 != password2):
-             
-                return JsonResponse({"message":"Şifreler eşleşmedi.","color":"#f34444","type":"Başarısız"}, safe=False)
-        if(users):
-        
-            return JsonResponse({"message":"Bu kullanıcıadı alınmış.","color":"#f34444","type":"Başarısız"}, safe=False)
-        if(email_check):
-           
-                return JsonResponse({"message":"Bu email adresi kullanılmış.","color":"#f34444","type":"Başarısız"}, safe=False)
+        return JsonResponse({"message":"Lütfen bilgileri doğru girin.","color":"#f34444","type":"Başarısız"}, safe=False)
 
 
 @admin_login_required(login_url = "pharmacy:dashboard")

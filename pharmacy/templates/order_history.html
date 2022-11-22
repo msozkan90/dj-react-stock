@@ -18,14 +18,13 @@
 
 
 {% block body %}
-                <!-- Begin Page Content -->
+       
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Sipariş Geçmişi</h1>
                     <p class="mb-4">Sipariş geçmişinizi kolayca görüntüleyebilrisiniz.</p>
 
-                    <!-- DataTales Example -->
+                  
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary"> Sipariş Geçmişi
@@ -56,7 +55,7 @@
 
                                       <td>{{item.item_name}}</td>
                                       <td>
-                                        {{item.quantity}}                  
+                                        {{ item.quantity | stringformat:'d' }}                  
                                       </td>
                                       <td>
                                         {{item.created_at|date:"d/m/Y H:i"}}                  
@@ -99,14 +98,14 @@
                     </div>
 
                 </div>
-                <!-- /.container-fluid -->
+              
 
 
 {% endblock  %}
 
 
 {% block js %}
-    <!-- Page level plugins -->
+ 
     <script>
         $(document).ready(function () {  
           $.fn.dataTable.moment( 'D/M/YYYY' ); 
@@ -206,8 +205,7 @@
                      "search":"Ara",
                      "copyTitle": "Panoya kopyala",
                      "paginate": {
-                      //"first":      "First",
-                    //  "last":       "Last",
+ 
                       "next":       "<i class='fa-solid fa-arrow-right'></i>",
                       "previous":   "<i class='fa-solid fa-arrow-left'></i>",
                       

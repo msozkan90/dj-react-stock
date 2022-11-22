@@ -31,7 +31,6 @@ const AddPharmacyButton=()=> {
 
   }
 
-console.log(screenStates)
 
 
 const getCookie = (name)  => {

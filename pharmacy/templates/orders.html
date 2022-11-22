@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block css %}
-    <!-- Custom styles for this page -->
     <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap5.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" rel="stylesheet"/>
@@ -18,87 +17,8 @@
 
 
 {% block body %}
-                <!-- Begin Page Content -->
-                {% comment %} <div class="container-fluid">
+             
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Sipariş Geçmişi</h1>
-                    <p class="mb-4">Sipariş geçmişinizi kolayca görüntüleyebilrisiniz.</p>
-
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary"> Sipariş Geçmişi
-                             </h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table
-                                id="example"
-                                class="table table-striped nowrap"
-                                style="width: 100%!important">
-                                <thead>
-                                    <tr>
-                                      <th data-priority="0" class="d-none">Id</th>
-                                      <th data-priority="1">Düzenle</th>
-                                      <th data-priority="2">Eczane</th>
-                                      <th data-priority="3">Malzeme Adı</th>
-                                      <th data-priority="4">Adet</th>                    
-                                      <th data-priority="5">Tarih</th>                    
-                                      <th data-priority="6">Durum</th>                    
-                                    </tr>               
-                                  </thead>
-                                  <tbody>
-                                    {% for item in items %}
-                                    <tr>
-                                      <td class="d-none">{{item.id}}</td>
-                                      <td>
-                                        <a href="{% url 'items:edit_item' item.id %}">
-                                          <i
-                                            class="fa fa-pen-to-square fa-1x text-primary text-btn-size"
-                                          ></i>
-                                        </a>
-                                      </td>
-                                      <td>{{item.user}}</td>
-
-                                      <td>{{item.item_name}}</td>
-                                      <td>
-                                        {{item.quantity}}                  
-                                      </td>
-                                      <td>
-                                        {{item.created_at|date:"d/m/Y H:i"}}                  
-                                      </td>
-                                      <td>
-                                        {% if item.status %}
-                                        <i class="fa fa-check bg-success text-white p-1"></i>
-                                        {% else %}
-                                        <i class="fa fa-xmark bg-danger text-white p-1 px-2"></i>
-                                        {% endif %}
-                                                     
-                                      </td>
-                                                   
-                                    </tr>
-                                    {% endfor %}
-                                  </tbody>
-                                  <tfoot>
-                                    <tr >
-                                      <th class="d-none">Id</th>
-                                      <th ></th>
-                                      <th>Eczane</th>  
-                                      <th>Malzeme Adı</th>
-                                      <th>Adet</th>   
-                                      <th>Tarih</th>                      
-                                      <th></th>               
-                    
-                                    </tr>
-                                  </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                </div> {% endcomment %}
-                <!-- /.container-fluid -->
                 <div class="container-fluid">
 
                   <h1 class="h3 mb-2 text-gray-800">Sipariş Geçmişi</h1>
@@ -123,7 +43,7 @@
 
 
 {% block js %}
-    <!-- Page level plugins -->
+ 
     <script>
         $(document).ready(function () {  
           $.fn.dataTable.moment( 'D/M/YYYY' ); 
@@ -165,7 +85,7 @@
                               select.append('<option value="' + d + '">' + d + '</option>');
                           });
                   }); 
-                   // Apply the search
+               
                    this.api().columns().every(function () {
                     var that = this;
       

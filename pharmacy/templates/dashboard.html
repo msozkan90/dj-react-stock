@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block css %}
-    <!-- Custom styles for this page -->
+
     <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap5.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" rel="stylesheet"/>
@@ -18,24 +18,24 @@
 
 
 {% block body %}
-                <!-- Begin Page Content -->
+               
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
+                  
                     <h1 class="h3 mb-2 text-gray-800">Kontrol Paneli</h1>
                     <p class="mb-4">Stok durumlarını tablo ve grafiklerle kolayca görüntüleyebilirsiniz.</p>
 
 
 
 
-                      <!-- Donut Chart -->
+                    
                       <div class="col-xl-12 col-lg-12">
                         <div class="card shadow mb-4">
-                            <!-- Card Header - Dropdown -->
+                   
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Stok Grafik</h6>
                             </div>
-                            <!-- Card Body -->
+                    
                             <div class="card-body">
                                 <div class="chart-pie pt-4">
                                     <canvas id="myPieChart"></canvas>
@@ -47,8 +47,6 @@
                     </div>
 
 
-
-                    <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">  
@@ -88,7 +86,7 @@
 
                                       <td>{{item.item_name}}</td>
                                       <td>
-                                        {{item.quantity}}                  
+                                        {{ item.quantity | stringformat:'d' }}                  
                                       </td>
                                       <td>
                                         {{item.updated_at|date:"d/m/Y H:i"}}                  
@@ -123,14 +121,13 @@
                     </div>
 
                 </div>
-                <!-- /.container-fluid -->
-
+     
 
 {% endblock  %}
 
 
 {% block js %}
-    <!-- Page level plugins -->
+
     <script>
         $(document).ready(function () {  
           $.fn.dataTable.moment( 'D/M/YYYY' ); 
@@ -317,11 +314,11 @@
     </script>
 
   <script>
-    // Set new default font family and font color to mimic Bootstrap's default styling
+
     Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
     Chart.defaults.global.defaultFontColor = '#858796';
     
-    // Pie Chart Example
+ 
     var ctx = document.getElementById("myPieChart");
     var myPieChart = new Chart(ctx, {
       type: 'pie',
